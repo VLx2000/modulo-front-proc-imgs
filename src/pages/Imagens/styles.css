@@ -1,0 +1,69 @@
+.titulo-pag {
+  text-align: center;
+}
+
+/*index*/
+/* .images-container {
+  min-height: 100vh;
+} */
+
+.header-imagens {
+  display: flex;
+  margin-block: 2em;
+}
+
+.header-imagens form {
+  width: 100%;
+}
+
+.div-botao-novo-upload {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+/*form*/
+.upload-form {
+  margin-block: 5em;
+}
+
+.form-inputs {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+
+.upload-button {
+  width: 100%;
+}
+
+.recarregar {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.progress-data {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+}
+
+.progress-data .progress {
+  height: auto;
+  font-size: inherit;
+  border-radius: 0.25em 0 0 0.25em;
+}
+
+.progress-data button {
+  border-radius: 0 0.25em 0.25em 0;
+}
+
+@media (min-width: 990px) {
+  .upload-form {
+    margin-inline: 15em;
+  }
+}
+
+@media (max-width: 991px) {
+  .upload-form {
+    margin-inline: 1em;
+  }
+}
