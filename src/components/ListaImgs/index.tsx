@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Badge, Button, ButtonGroup, Dropdown, Modal, Table } from "react-bootstrap";
 import { Image } from "types/images";
 import axiosInstance from "utils/axios";
-import './styles.css';
 
 type Props = {
     images: Image[];
@@ -19,7 +18,7 @@ function ListaImgs({ images, arquivado }: Props) {
     // para arquivar/desarquivar img
     function changeFileVisibility(id: Number) {
         axiosInstance
-            .put('/archive/' + id)
+            .put('/images/archive/' + id)
             .then((res) => {
                 //alert("File Hide success");
                 document.location.reload();
@@ -30,7 +29,7 @@ function ListaImgs({ images, arquivado }: Props) {
     // apaga imagem
     function deleteFile(id: Number) {
         axiosInstance
-            .delete('/' + id)
+            .delete('/images/' + id)
             .then((res) => {
                 //alert("File Hide success");
                 document.location.reload();
@@ -42,7 +41,7 @@ function ListaImgs({ images, arquivado }: Props) {
     function atualizarAquisicao(aquisicao: string, id: Number) {
         //console.log(aquisicao)
         axiosInstance
-            .put('/update/' + id, { aquisicao: aquisicao })
+            .put('/images/update/' + id, { aquisicao: aquisicao })
             .then((res) => {
                 document.location.reload();
             })
@@ -50,8 +49,8 @@ function ListaImgs({ images, arquivado }: Props) {
     }
 
     return (
-        <div className="lista-imagens">
-            <Table striped bordered responsive>
+        <div className="lista">
+            <Table striped bordered /* responsive */>
                 <thead>
                     <tr>
                         <th>#id</th>
@@ -66,14 +65,14 @@ function ListaImgs({ images, arquivado }: Props) {
                         <tr key={image.id}>
                             <td>{image.id}/Paciente: {image.idPaciente}</td>
                             <td>
-                                <input type="date" value={image.aquisicao} className="aquisicao"
+                                <input type="date" value={image.aquisicao}
                                     onChange={(e) => atualizarAquisicao(e.target.value, image.id)} />
                             </td>
                             <td>{image.tipo}</td>
                             <td>
                                 <Badge pill bg="dark" text="light">Processamento não iniciado</Badge>{' '}
                             </td>
-                            <td className="botao-download">
+                            <td>
                                 <Dropdown as={ButtonGroup}>
                                     <Button variant="success">Iniciar processamento</Button>
                                     <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />

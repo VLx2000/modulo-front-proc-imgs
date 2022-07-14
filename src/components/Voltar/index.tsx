@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
-import './styles.css';
 
 type Props = {
     caminho: string;
@@ -10,7 +9,7 @@ type Props = {
 function Voltar({ caminho }: Props) {
 
     return(
-        <div className='div-voltar'>
+        <div>
             <Link to={caminho}>
                 <FontAwesomeIcon icon={faAngleLeft} /> Voltar
             </Link>

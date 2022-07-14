@@ -1,35 +1,6 @@
-.titulo-pag {
-  text-align: center;
-}
-
-/*index*/
-/* .images-container {
-  min-height: 100vh;
-} */
-
-.header-imagens {
-  display: flex;
-  margin-block: 2em;
-}
-
-.header-imagens form {
-  width: 100%;
-}
-
-.div-botao-novo-upload {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-}
-
 /*form*/
 .upload-form {
   margin-block: 5em;
-}
-
-.form-inputs {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
 }
 
 .upload-button {

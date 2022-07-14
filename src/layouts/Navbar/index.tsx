@@ -12,7 +12,7 @@ function NavigationBar() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav.Link href="#lista">
-                        <p className='link'>Lista Pacientes</p>
+                        <p className='link'>Pacientes</p>
                     </Nav.Link>
                     <Nav.Link href="#outro">
                         <p className='link'>outro</p>

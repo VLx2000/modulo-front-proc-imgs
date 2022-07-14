@@ -16,7 +16,7 @@ function ListaImagens() {
 
     useEffect(() => {
         axiosInstance
-            .get('/' + params.idPaciente)
+            .get('/images/' + params.idPaciente)
             .then((res) => {
                 const data = res.data as Image[];
                 setImages(data);
@@ -41,9 +41,9 @@ function ListaImagens() {
 
     return (
         <Container className="images-container">
-            <Voltar caminho={`/`} />
+            <Voltar caminho={'/paciente'} />
             <h3 className="titulo-pag">Imagens do paciente {params.idPaciente}</h3>
-            <header className="header-imagens">
+            <header className="header">
                 <FormControl
                     type="search"
                     placeholder="filtrar imagem por id"
@@ -52,7 +52,7 @@ function ListaImagens() {
                     onChange={handleFilter}
                 />
                 {/* Ir para formulario de upload de imagens */}
-                <div className="div-botao-novo-upload">
+                <div className="div-botao-novo">
                     <Link to={`/paciente/${params.idPaciente}/upload`}>
                         <Button>Fazer upload de nova imagem</Button>
                     </Link>

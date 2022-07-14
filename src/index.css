@@ -16,3 +16,41 @@ body {
   min-height: 100vh;
   background-color: #f7f7f7 !important;
 }
+
+.titulo-pag {
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  margin-block: 2em;
+}
+
+.header form {
+  width: 100%;
+}
+
+.div-botao-novo {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.divMsg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lista table {
+  text-align: center;
+  background-color: white;
+}
+
+.opcao-remover {
+  color: red !important;
+}
+
+td a .btn {
+  margin-inline: 10px;
+}

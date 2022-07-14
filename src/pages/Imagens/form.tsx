@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Alert, Button, Container, Form, ProgressBar } from "react-bootstrap";
+import { Alert, Button, Container, Form, ProgressBar, Row, Col } from "react-bootstrap";
 import { useParams, Link } from "react-router-dom";
 import axiosInstance from "utils/axios";
 import { Voltar } from "components";
@@ -29,7 +29,7 @@ function UploadForm() {
         formData.append("image", image);
 
         axiosInstance
-            .post('/', formData, {
+            .post('/images/', formData, {
                 signal,
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -63,21 +63,24 @@ function UploadForm() {
 
     return (
         <Container className="upload-container">
-            <Voltar caminho={`/paciente/${params.idPaciente}`}/>
+            <Voltar caminho={`/paciente/${params.idPaciente}`} />
             <h3 className="titulo-pag">Upload de imagens</h3>
             <Form onSubmit={submitHandler} className="upload-form">
                 <Form.Group controlId="formFile" className="mb-3">
-                    <Form.Group className="form-inputs">
-                        <Form.Control
-                            type="file"
-                            // types necessarios para obter somente uma imagem passada no forms
-                            onChange={(e) => setImage(((e.target as HTMLInputElement).files as FileList)[0] as Blob)}
-                        />
+                    <Form.Control
+                        type="file"
+                        // types necessarios para obter somente uma imagem passada no forms
+                        onChange={(e) => setImage(((e.target as HTMLInputElement).files as FileList)[0] as Blob)}
+                    />
+                </Form.Group>
+                <Form.Group as={Row} controlId="formDate" className="mb-3">
+                    <Form.Label column sm="6">Data de aquisição:</Form.Label>
+                    <Col sm="6">
                         <Form.Control
                             type="date"
                             onChange={(e) => setAquisicao(e.target.value as string)}
                         />
-                    </Form.Group>
+                    </Col>
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Button variant="primary"
