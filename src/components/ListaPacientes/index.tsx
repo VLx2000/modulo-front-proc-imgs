@@ -1,45 +1,37 @@
-import { Button, Table } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Paciente } from "types/pacientes";
+import './styles.css';
 
 type Props = {
     pacientes: Paciente[];
 }
 
-// component q exibe a lista de imagens de determinado paciente
+// component q exibe a lista de pacientes de determinado user
 function ListaPacientes({ pacientes }: Props) {
 
     return (
-        <div className="lista">
-            <Table striped borderless responsive>
-                <thead>
-                    <tr>
-                        <th>#id</th>
-                        <th>Apelido</th>
-                        <th>Sexo</th>
-                        <th>Idade</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {pacientes.map(paciente => (
-                        <tr key={paciente.id}>
-                            <td>{paciente.id}</td>
-                            <td>{paciente.nome}</td>
-                            <td>{paciente.sexo}</td>
-                            <td>{paciente.idade}</td>
-                            <td>
-                                <Link to={`/paciente/editar/${paciente.id}`}>
-                                    <Button variant="secondary">Editar</Button>
-                                </Link>
-                                <Link to={`/paciente/${paciente.id}`}>
-                                    <Button variant="primary">Imagens</Button>
-                                </Link>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
+        <div className="lista row">
+            {pacientes.map(paciente => (
+                <div key={paciente.id} className="col-sm-12 col-lg-6 col-xl-4 mb-3">
+                    <Card className="card-paciente">
+                        <div>
+                            <h4>{paciente.id}</h4>
+                            <h6>Apelido: {paciente.nome}</h6>
+                            <div>Sexo: {paciente.sexo}</div>
+                            <div>Idade: {paciente.idade}</div>
+                        </div>
+                        <div className="div-botoes-paciente">
+                            <Link to={`/paciente/editar/${paciente.id}`}>
+                                <Button variant="outline-secondary">Editar</Button>
+                            </Link>
+                            <Link to={`/paciente/${paciente.id}`}>
+                                <Button variant="outline-primary">Imagens</Button>
+                            </Link>
+                        </div>
+                    </Card>
+                </div>
+            ))}
             <div className='divMsg'><p>{pacientes.length} paciente(s)</p></div>
         </div>
     );

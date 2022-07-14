@@ -54,3 +54,7 @@ body {
 td a .btn {
   margin-inline: 10px;
 }
+
+.header .form-control {
+  width: auto !important;
+}

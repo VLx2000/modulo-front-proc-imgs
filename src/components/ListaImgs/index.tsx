@@ -50,32 +50,32 @@ function ListaImgs({ images, arquivado }: Props) {
 
     return (
         <div className="lista">
-            <Table striped bordered /* responsive */>
+            <Table striped bordered responsive>
                 <thead>
                     <tr>
                         <th>#id</th>
+                        <th>Status</th>
                         <th>Data de aquisição</th>
                         <th>Tipo</th>
-                        <th>Status</th>
                         <th>Ação</th>
                     </tr>
                 </thead>
                 <tbody>
                     {images.map(image => (
                         <tr key={image.id}>
-                            <td>{image.id}/Paciente: {image.idPaciente}</td>
+                            <td>{image.id}</td>
+                            <td>
+                                <Badge pill bg="dark" text="light">Processamento ainda não realizado</Badge>{' '}
+                            </td>
                             <td>
                                 <input type="date" value={image.aquisicao}
                                     onChange={(e) => atualizarAquisicao(e.target.value, image.id)} />
                             </td>
                             <td>{image.tipo}</td>
                             <td>
-                                <Badge pill bg="dark" text="light">Processamento não iniciado</Badge>{' '}
-                            </td>
-                            <td>
                                 <Dropdown as={ButtonGroup}>
-                                    <Button variant="success">Iniciar processamento</Button>
-                                    <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
+                                    <Button variant="info">Iniciar processamento</Button>
+                                    <Dropdown.Toggle split variant="info" id="dropdown-split-basic" />
                                     <Dropdown.Menu>
                                         <Dropdown.Item onClick={() => changeFileVisibility(image.id)}>
                                             {image.arquivado ? 'Desarquivar' : 'Arquivar'}</Dropdown.Item>
@@ -104,6 +104,8 @@ function ListaImgs({ images, arquivado }: Props) {
                                         </Modal>
                                     </Dropdown.Menu>
                                 </Dropdown>
+                                <span> </span>
+                                <Button disabled variant="success">Resultados</Button>
                             </td>
                         </tr>
                     ))}
