@@ -1,0 +1,16 @@
+.login-container {    
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container form {
+    background-color: rgb(255, 255, 255);
+    padding: 30px;
+    border-radius: 16px;
+}
+
+.div-botao-entrar {
+    text-align: center;
+}

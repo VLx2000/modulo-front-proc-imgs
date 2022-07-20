@@ -22,10 +22,10 @@ function ListaPacientes({ pacientes }: Props) {
                             <div>Idade: {paciente.idade}</div>
                         </div>
                         <div className="div-botoes-paciente">
-                            <Link to={`/paciente/editar/${paciente.id}`}>
+                            <Link to={`/editar/${paciente.id}`}>
                                 <Button variant="outline-secondary">Editar</Button>
                             </Link>
-                            <Link to={`/paciente/${paciente.id}`}>
+                            <Link to={`/${paciente.id}`}>
                                 <Button variant="outline-primary">Imagens</Button>
                             </Link>
                         </div>

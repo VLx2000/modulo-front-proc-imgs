@@ -68,7 +68,7 @@ function ListaImgs({ images, arquivado }: Props) {
                                 <Badge pill bg="dark" text="light">Processamento ainda não realizado</Badge>{' '}
                             </td>
                             <td>
-                                <input type="date" value={image.aquisicao}
+                                <input type="date" value={image.aquisicao || ''}
                                     onChange={(e) => atualizarAquisicao(e.target.value, image.id)} />
                             </td>
                             <td>{image.tipo}</td>

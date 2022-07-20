@@ -25,3 +25,9 @@ html {
     font-size: 1.5em;
     margin: 0;
 }
+
+.div-sair {
+    width: -webkit-fill-available;
+    justify-content: end;
+    display: flex;
+}

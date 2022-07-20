@@ -25,7 +25,7 @@ function UploadForm() {
         const signal = abortControllerRef.current.signal;   //sinal se deve continuar requisição
         formData.append("aquisicao", aquisicao as string);
         formData.append("idPaciente", params.idPaciente as string /* Math.floor(Math.random()* (10 - 1) + 1) as unknown as Blob*/);
-        formData.append("idUser", 1 as unknown as Blob);
+        formData.append("idUser", JSON.parse(localStorage.getItem('user')!).id as unknown as Blob);
         formData.append("image", image);
 
         axiosInstance
@@ -63,8 +63,8 @@ function UploadForm() {
 
     return (
         <Container className="upload-container">
-            <Voltar caminho={`/paciente/${params.idPaciente}`} />
-            <h3 className="titulo-pag">Upload de imagens</h3>
+            <Voltar caminho={`/${params.idPaciente}`} />
+            <h3 className="titulo-pag">Upload de imagens do paciente {params.idPaciente}</h3>
             <Form onSubmit={submitHandler} className="upload-form">
                 <Form.Group controlId="formFile" className="mb-3">
                     <Form.Control
@@ -93,7 +93,7 @@ function UploadForm() {
                 {message && //caso em q terminou o upload ou houve algum erro
                     <Alert variant={message === 'Enviado com sucesso' ? 'success' : 'danger'}>
                         <span>{message + ' '}</span>
-                        <Link to={`/paciente/${params.idPaciente}`}>
+                        <Link to={`/${params.idPaciente}`}>
                             <span className="recarregar">Ir para imagens salvas</span>
                         </Link>
                     </Alert>

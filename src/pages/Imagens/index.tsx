@@ -41,7 +41,7 @@ function ListaImagens() {
 
     return (
         <Container className="images-container">
-            <Voltar caminho={'/paciente'} />
+            <Voltar caminho={'/'} />
             <h3 className="titulo-pag">Imagens do paciente {params.idPaciente}</h3>
             <header className="header">
                 <FormControl
@@ -53,7 +53,7 @@ function ListaImagens() {
                 />
                 {/* Ir para formulario de upload de imagens */}
                 <div className="div-botao-novo">
-                    <Link to={`/paciente/${params.idPaciente}/upload`}>
+                    <Link to={`/${params.idPaciente}/upload`}>
                         <Button>Fazer upload de nova imagem</Button>
                     </Link>
                 </div>

@@ -1,4 +1,4 @@
-import { ListaPacientes, Voltar } from 'components';
+import { ListaPacientes } from 'components';
 import { Button, Container, FormControl } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Paciente } from 'types/pacientes';
@@ -35,7 +35,6 @@ function Pacientes() {
 
     return (
         <Container>
-            <Voltar caminho={'/'} />
             <h3 className="titulo-pag">Lista de Pacientes</h3>
             <header className="header">
                 <FormControl
@@ -47,7 +46,7 @@ function Pacientes() {
                 />
                 {/* Ir para formulario de criação de pacientes */}
                 <div className="div-botao-novo">
-                    <Link to={`/paciente`}>
+                    <Link to={`/`}>
                         <Button>Adicionar novo paciente</Button>
                     </Link>
                 </div>
