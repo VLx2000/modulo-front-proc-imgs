@@ -26,7 +26,7 @@ function NavigationBar() {
                         <p className='link'>outro</p>
                     </Nav.Link>
                     <Nav.Link href="">
-                        <p className='link'>outro</p>
+                        <p className='link'>{context?.user != null ? context?.user.name: 'Carregando'}</p>
                     </Nav.Link>
                     <div className='div-sair'><Button variant='outline-danger' onClick={handleLogout}>Sair</Button></div>
                 </Navbar.Collapse>

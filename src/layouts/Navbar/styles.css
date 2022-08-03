@@ -28,6 +28,6 @@ html {
 
 .div-sair {
     width: -webkit-fill-available;
-    justify-content: end;
+    justify-content: flex-end;
     display: flex;
 }

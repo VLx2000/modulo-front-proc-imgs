@@ -1,14 +1,16 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Alert, Button, Container, Form, ProgressBar, Row, Col } from "react-bootstrap";
 import { useParams, Link } from "react-router-dom";
 import axiosInstance from "utils/axios";
 import { Voltar } from "components";
 import './styles.css';
+import { AuthContext } from "contexts/auth";
 
 // component q exibe form para upload
 function UploadForm() {
 
     const params = useParams();
+    const context = useContext(AuthContext);
     // controller para cancelar requisição quando cliente desejar
     let abortControllerRef = useRef<AbortController>();
 
@@ -25,7 +27,7 @@ function UploadForm() {
         const signal = abortControllerRef.current.signal;   //sinal se deve continuar requisição
         formData.append("aquisicao", aquisicao as string);
         formData.append("idPaciente", params.idPaciente as string /* Math.floor(Math.random()* (10 - 1) + 1) as unknown as Blob*/);
-        formData.append("idUser", JSON.parse(localStorage.getItem('user')!).id as unknown as Blob);
+        formData.append("idUser", context?.user?.id as unknown as Blob);
         formData.append("image", image);
 
         axiosInstance
