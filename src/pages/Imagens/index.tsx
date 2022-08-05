@@ -53,7 +53,7 @@ function ListaImagens() {
                 />
                 {/* Ir para formulario de upload de imagens */}
                 <div className="div-botao-novo">
-                    <Link to={`/${params.idPaciente}/upload`}>
+                    <Link to={`/upload/${params.idPaciente}`}>
                         <Button>Fazer upload de nova imagem</Button>
                     </Link>
                 </div>

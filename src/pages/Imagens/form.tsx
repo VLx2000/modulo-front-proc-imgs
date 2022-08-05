@@ -65,7 +65,7 @@ function UploadForm() {
 
     return (
         <Container className="upload-container">
-            <Voltar caminho={`/${params.idPaciente}`} />
+            <Voltar caminho={`/imagens/${params.idPaciente}`} />
             <h3 className="titulo-pag">Upload de imagens do paciente {params.idPaciente}</h3>
             <Form onSubmit={submitHandler} className="upload-form">
                 <Form.Group controlId="formFile" className="mb-3">
@@ -95,7 +95,7 @@ function UploadForm() {
                 {message && //caso em q terminou o upload ou houve algum erro
                     <Alert variant={message === 'Enviado com sucesso' ? 'success' : 'danger'}>
                         <span>{message + ' '}</span>
-                        <Link to={`/${params.idPaciente}`}>
+                        <Link to={`/imagens/${params.idPaciente}`}>
                             <span className="recarregar">Ir para imagens salvas</span>
                         </Link>
                     </Alert>

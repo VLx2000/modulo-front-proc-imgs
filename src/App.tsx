@@ -35,13 +35,13 @@ function App() {
                 <Pacientes />
               </Private>} />
             <Route 
-              path=":idPaciente" 
+              path="/imagens/:idPaciente" 
               element={
                 <Private>
                   <ListaImagens />
                 </Private>} />
             <Route 
-              path=":idPaciente/upload"
+              path="/upload/:idPaciente"
               element={
               <Private>
                 <UploadForm />

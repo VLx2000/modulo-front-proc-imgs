@@ -58,6 +58,7 @@ const AuthProvider = ({ children }: any) => {
                 } as CommonHeaderProperties
 
                 setUser({ id: loggedUser.id, name: loggedUser.name });
+                setError('');
                 navigate('/');
             })
             .catch((err) => setError(err))

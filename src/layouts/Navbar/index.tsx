@@ -15,7 +15,7 @@ function NavigationBar() {
         <Navbar collapseOnSelect bg="dark" variant='dark' expand="lg" sticky="top">
             <Container >
                 <Navbar.Brand href='/' title="Processamento de imagens">
-                    <h1>Processamento de imagens</h1>
+                    <h1>Proc de imgs</h1>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">

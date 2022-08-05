@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { Alert, Button, Container, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "utils/axios";
 import { Voltar } from "components";
@@ -11,6 +11,7 @@ function EditarPaciente() {
     const params = useParams();
     const navigate = useNavigate();
 
+    const [erro, setErro] = useState<string>('');
     const [carregado, setCarregado] = useState<Boolean>(false);
     const [paciente, setPaciente] = useState<Paciente>();
 
@@ -27,10 +28,21 @@ function EditarPaciente() {
                 setApelido(data?.apelido);
                 setSexo(data?.sexo);
                 setNascimento(data?.nascimento);
-                console.table(data)
+                //console.table(data)
                 setCarregado(true);
             })
-            .catch((err) => alert("Erro ao carregar pacientes" + err));
+            .catch((error) => {
+                const code = error?.response?.status;
+                console.log(code)
+                switch (code) {
+                    case 401:
+                        setErro("Você não pode acessar esse paciente");
+                        break;
+                    default:
+                        setErro("Ops. Algo deu errado");
+                        break;
+                }
+            });
     }, [paciente?.apelido, paciente?.nascimento, paciente?.sexo, params.idPaciente]);
 
     const submitHandler = async (e: { preventDefault: () => void; }) => {
@@ -63,6 +75,7 @@ function EditarPaciente() {
     return (
         <Container>
             <Voltar caminho={`/`} />
+            {erro && <Alert variant="danger">{erro}</Alert>}
             {carregado &&
                 <Container className="login-container">
                     <Form onSubmit={submitHandler}>

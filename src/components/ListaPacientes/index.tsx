@@ -26,7 +26,7 @@ function ListaPacientes({ pacientes }: Props) {
                             <Link to={`/editar/${paciente.id}`}>
                                 <Button variant="outline-secondary">Editar</Button>
                             </Link>
-                            <Link to={`/${paciente.id}`}>
+                            <Link to={`/imagens/${paciente.id}`}>
                                 <Button variant="outline-primary">Imagens</Button>
                             </Link>
                         </div>
