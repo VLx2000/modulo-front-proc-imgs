@@ -41,7 +41,7 @@ function ListaImgs({ images, arquivado }: Props) {
     function atualizarAquisicao(aquisicao: string, id: Number) {
         //console.log(aquisicao)
         axiosInstance
-            .put('/images/update/' + id, { aquisicao: aquisicao })
+            .put('/images/update/' + id, { aquisicao: new Date(aquisicao).toISOString() })
             .then((res) => {
                 document.location.reload();
             })
@@ -68,7 +68,7 @@ function ListaImgs({ images, arquivado }: Props) {
                                 <Badge pill bg="dark" text="light">Processamento ainda não realizado</Badge>{' '}
                             </td>
                             <td>
-                                <input type="date" value={image.aquisicao || ''}
+                                <input type="date" value={image.aquisicao.toString().slice(0,10) || ''}
                                     onChange={(e) => atualizarAquisicao(e.target.value, image.id)} />
                             </td>
                             <td>{image.tipo}</td>

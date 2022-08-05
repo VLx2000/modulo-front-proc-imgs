@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { Pacientes, ListaImagens, UploadForm, Login} from 'pages';
+import { Pacientes, ListaImagens, UploadForm, Login, Register, NovoPaciente, EditarPaciente} from 'pages';
 import { Layout } from "layouts";
 import AuthProvider, { AuthContext } from './contexts/auth';
 import { useContext } from "react";
@@ -26,6 +26,7 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/" element={<Layout />}>
             <Route 
               index 
@@ -45,18 +46,18 @@ function App() {
               <Private>
                 <UploadForm />
               </Private>} />
-            {/* <Route 
-              path=":idPaciente/editar" 
+            <Route 
+              path="/editar/:idPaciente" 
               element={
               <Private>
-                <EdicaoForm />
-              </Private>} /> */}
-            {/* <Route 
+                <EditarPaciente />
+              </Private>} />
+            <Route 
               path="/adicionar" 
               element={
               <Private>
-                <PacienteForm />
-              </Private>} /> */}
+                <NovoPaciente />
+              </Private>} />
           </Route>
         </Routes>
       </AuthProvider>

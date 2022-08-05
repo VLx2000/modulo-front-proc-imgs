@@ -3,7 +3,7 @@ export type Image = {
     idPaciente: number;
     caminho: string;
     tipo: string;
-    aquisicao: string;
+    aquisicao: Date;
     arquivado: boolean;
     createdAt?: Date;
     updatedAt?: Date;

@@ -14,6 +14,7 @@ interface AuthContextInterface {
     loading?: boolean
     login?: (email: string, password: string) => void
     logout?: () => void
+    error?: string
 }
 
 export const AuthContext = createContext<AuthContextInterface | null>(null);
@@ -23,6 +24,7 @@ const AuthProvider = ({ children }: any) => {
     const navigate = useNavigate();
     const [user, setUser] = useState<User|null>(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string>('');
 
     useEffect(() => {
         const recoveredUser = localStorage.getItem('user');
@@ -39,25 +41,26 @@ const AuthProvider = ({ children }: any) => {
 
     const login = async (email: string, password: string) => {
         //console.log('login', { email, password });
-
-        const res = await axiosInstance
+        
+        await axiosInstance
             .post('/users/auth',
                 JSON.stringify({ email, password }),
                 { headers: { "Content-Type": 'application/json', } }
             )
+            .then((res) => {
+                const loggedUser = res.data.user;
+                const token = res.data.token;
+                localStorage.setItem('user', JSON.stringify(loggedUser));
+                localStorage.setItem('token', token);
 
-        const loggedUser = res.data.user;
-        const token = res.data.token;
+                axiosInstance.defaults.headers = {
+                    Authorization: `Bearer ${token}`
+                } as CommonHeaderProperties
 
-        localStorage.setItem('user', JSON.stringify(loggedUser));
-        localStorage.setItem('token', token);
-
-        axiosInstance.defaults.headers = {
-            Authorization: `Bearer ${token}`
-        } as CommonHeaderProperties
-
-        setUser({ id: loggedUser.id, name: loggedUser.name });
-        navigate('/');
+                setUser({ id: loggedUser.id, name: loggedUser.name });
+                navigate('/');
+            })
+            .catch((err) => setError(err))
     };
 
     const logout = () => {
@@ -75,7 +78,7 @@ const AuthProvider = ({ children }: any) => {
 
     return (
         <AuthContext.Provider
-            value={{ authenticated: !!user, user, loading, login, logout }}>
+            value={{ authenticated: !!user, user, loading, login, logout, error }}>
             {children}
         </AuthContext.Provider>
     );

@@ -27,7 +27,14 @@ html {
 }
 
 .div-sair {
+    color: #f2f2f2;
     width: -webkit-fill-available;
     justify-content: flex-end;
     display: flex;
+}
+
+.div-sair div {
+    display: flex;
+    align-items: center;
+    padding-inline: 20px;
 }

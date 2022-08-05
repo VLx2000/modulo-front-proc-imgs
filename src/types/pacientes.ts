@@ -1,6 +1,6 @@
 export type Paciente = {
     id: number;
-    nome: string;
+    apelido: string;
     sexo: string;
-    idade: string;
+    nascimento: Date;
 }

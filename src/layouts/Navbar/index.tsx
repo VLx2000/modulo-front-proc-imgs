@@ -22,13 +22,10 @@ function NavigationBar() {
                     <Nav.Link href="/">
                         <p className='link'>Pacientes</p>
                     </Nav.Link>
-                    <Nav.Link href="">
-                        <p className='link'>outro</p>
-                    </Nav.Link>
-                    <Nav.Link href="">
-                        <p className='link'>{context?.user != null ? context?.user.name: 'Carregando'}</p>
-                    </Nav.Link>
-                    <div className='div-sair'><Button variant='outline-danger' onClick={handleLogout}>Sair</Button></div>
+                    <div className='div-sair'>
+                        <div>Entrou como: {context?.user != null ? context?.user.name: 'Carregando'}</div>
+                        <Button variant='outline-danger' onClick={handleLogout}> Sair</Button>
+                    </div>
                 </Navbar.Collapse>
             </Container>
         </Navbar>

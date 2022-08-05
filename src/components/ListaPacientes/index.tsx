@@ -1,6 +1,7 @@
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Paciente } from "types/pacientes";
+import calculaIdade from "utils/calculaIdade";
 import './styles.css';
 
 type Props = {
@@ -16,10 +17,10 @@ function ListaPacientes({ pacientes }: Props) {
                 <div key={paciente.id} className="col-sm-12 col-lg-6 col-xl-4 mb-3">
                     <Card className="card-paciente">
                         <div>
-                            <h4>{paciente.id}</h4>
-                            <h6>Apelido: {paciente.nome}</h6>
+                            <h4>#{paciente.id}</h4>
+                            <h6>Apelido: {paciente.apelido}</h6>
                             <div>Sexo: {paciente.sexo}</div>
-                            <div>Idade: {paciente.idade}</div>
+                            <div>Idade: {calculaIdade(paciente.nascimento.toString())}</div>
                         </div>
                         <div className="div-botoes-paciente">
                             <Link to={`/editar/${paciente.id}`}>

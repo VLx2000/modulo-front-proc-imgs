@@ -1,37 +1,27 @@
 import { ListaPacientes } from 'components';
+import { useEffect, useState } from 'react';
 import { Button, Container, FormControl } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Paciente } from 'types/pacientes';
+import axiosInstance from 'utils/axios';
 
 //pag q lista os pacientes
 function Pacientes() {
 
-    const pacientes: Paciente[] = [
-        {
-            id: 1,
-            nome: "cleiton",
-            sexo: 'masculino',
-            idade: '13 anos'
-        },
-        {
-            id: 8,
-            nome: "-",
-            sexo: 'masculino',
-            idade: '29 anos'
-        },
-        {
-            id: 12,
-            nome: "tabata",
-            sexo: 'feminino',
-            idade: '-'
-        },
-        {
-            id: 16,
-            nome: "-",
-            sexo: '-',
-            idade: '67 anos'
-        },
-    ];
+    const [carregado, setCarregado] = useState<Boolean>(false);
+    const [pacientes, setPacientes] = useState<Paciente[]>([]);
+
+    useEffect(() => {
+        axiosInstance
+            .get('/pacientes/')
+            .then((res) => {
+                const data = res.data as Paciente[];
+                setPacientes(data);
+                //console.table(data)
+                setCarregado(true);
+            })
+            .catch((err) => alert("Erro ao carregar pacientes" + err));
+    }, []);
 
     return (
         <Container>
@@ -46,12 +36,14 @@ function Pacientes() {
                 />
                 {/* Ir para formulario de criação de pacientes */}
                 <div className="div-botao-novo">
-                    <Link to={`/`}>
+                    <Link to={'/adicionar'}>
                         <Button>Adicionar novo paciente</Button>
                     </Link>
                 </div>
             </header>
-            <ListaPacientes pacientes={pacientes} />
+            {carregado &&
+                <ListaPacientes pacientes={pacientes} />
+            }
         </Container>
     );
 }
