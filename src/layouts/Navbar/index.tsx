@@ -22,6 +22,9 @@ function NavigationBar() {
                     <Nav.Link href="/">
                         <p className='link'>Pacientes</p>
                     </Nav.Link>
+                    <Nav.Link href="/">
+                        <p className='link'>Adicionar novo processamento</p>
+                    </Nav.Link>
                     <div className='div-sair'>
                         <div>Entrou como: {context?.user != null ? context?.user.name: 'Carregando'}</div>
                         <Button variant='outline-danger' onClick={handleLogout}> Sair</Button>

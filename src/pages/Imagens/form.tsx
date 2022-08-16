@@ -71,6 +71,7 @@ function UploadForm() {
                 <Form.Group controlId="formFile" className="mb-3">
                     <Form.Control
                         type="file"
+                        required
                         // types necessarios para obter somente uma imagem passada no forms
                         onChange={(e) => setImage(((e.target as HTMLInputElement).files as FileList)[0] as Blob)}
                     />
@@ -80,6 +81,7 @@ function UploadForm() {
                     <Col sm="6">
                         <Form.Control
                             type="date"
+                            required
                             onChange={(e) => setAquisicao(e.target.value as string)}
                         />
                     </Col>

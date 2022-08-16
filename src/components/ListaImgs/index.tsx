@@ -18,7 +18,7 @@ function ListaImgs({ images, arquivado }: Props) {
     // para arquivar/desarquivar img
     function changeFileVisibility(id: Number) {
         axiosInstance
-            .put('/images/archive/' + id)
+            .put('/images/' + id + '/archive')
             .then((res) => {
                 //alert("File Hide success");
                 document.location.reload();
@@ -41,7 +41,7 @@ function ListaImgs({ images, arquivado }: Props) {
     function atualizarAquisicao(aquisicao: string, id: Number) {
         //console.log(aquisicao)
         axiosInstance
-            .put('/images/update/' + id, { aquisicao: new Date(aquisicao).toISOString() })
+            .put('/images/' + id + '/update', { aquisicao: new Date(aquisicao).toISOString() })
             .then((res) => {
                 document.location.reload();
             })
