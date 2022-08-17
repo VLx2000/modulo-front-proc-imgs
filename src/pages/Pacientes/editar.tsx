@@ -35,8 +35,8 @@ function EditarPaciente() {
                 const code = error?.response?.status;
                 console.log(code)
                 switch (code) {
-                    case 401:
-                        setErro("Você não pode acessar esse paciente");
+                    case 404:
+                        setErro("Paciente não encontrado");
                         break;
                     default:
                         setErro("Ops. Algo deu errado");
