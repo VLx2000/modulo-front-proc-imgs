@@ -4,13 +4,11 @@ import { useParams, Link } from "react-router-dom";
 import axiosInstance from "utils/axios";
 import { Voltar } from "components";
 import './styles.css';
-import { AuthContext } from "contexts/auth";
 
 // component q exibe form para upload
 function UploadForm() {
 
     const params = useParams();
-    const context = useContext(AuthContext);
     // controller para cancelar requisição quando cliente desejar
     let abortControllerRef = useRef<AbortController>();
 
@@ -26,7 +24,6 @@ function UploadForm() {
         abortControllerRef.current = new AbortController();
         const signal = abortControllerRef.current.signal;   //sinal se deve continuar requisição
         formData.append("aquisicao", aquisicao as string);
-        formData.append("idUser", context?.user?.id as unknown as Blob);
         formData.append("image", image);
 
         axiosInstance
