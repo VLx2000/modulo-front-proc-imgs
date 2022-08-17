@@ -26,12 +26,11 @@ function UploadForm() {
         abortControllerRef.current = new AbortController();
         const signal = abortControllerRef.current.signal;   //sinal se deve continuar requisição
         formData.append("aquisicao", aquisicao as string);
-        formData.append("idPaciente", params.idPaciente as string /* Math.floor(Math.random()* (10 - 1) + 1) as unknown as Blob*/);
         formData.append("idUser", context?.user?.id as unknown as Blob);
         formData.append("image", image);
 
         axiosInstance
-            .post('/images/', formData, {
+            .post('/images/' + params.idPaciente + '/create', formData, {
                 signal,
                 headers: {
                     "Content-Type": "multipart/form-data",

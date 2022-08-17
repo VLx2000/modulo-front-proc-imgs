@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Badge, Button, ButtonGroup, Dropdown, Modal, Table } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import { Image } from "types/images";
 import axiosInstance from "utils/axios";
 
@@ -11,6 +12,7 @@ type Props = {
 // component q exibe a lista de imagens de determinado paciente
 function ListaImgs({ images, arquivado }: Props) {
 
+    const params = useParams();
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -18,7 +20,7 @@ function ListaImgs({ images, arquivado }: Props) {
     // para arquivar/desarquivar img
     function changeFileVisibility(id: Number) {
         axiosInstance
-            .put('/images/' + id + '/archive')
+            .put('/images/' + params.idPaciente + '/archive/' + id)
             .then((res) => {
                 //alert("File Hide success");
                 document.location.reload();
@@ -29,7 +31,7 @@ function ListaImgs({ images, arquivado }: Props) {
     // apaga imagem
     function deleteFile(id: Number) {
         axiosInstance
-            .delete('/images/' + id)
+            .delete('/images/' + params.idPaciente + '/delete/' + id)
             .then((res) => {
                 //alert("File Hide success");
                 document.location.reload();
@@ -41,7 +43,7 @@ function ListaImgs({ images, arquivado }: Props) {
     function atualizarAquisicao(aquisicao: string, id: Number) {
         //console.log(aquisicao)
         axiosInstance
-            .put('/images/' + id + '/update', { aquisicao: new Date(aquisicao).toISOString() })
+            .put('/images/' + params.idPaciente + '/update/' + id, { aquisicao: new Date(aquisicao).toISOString() })
             .then((res) => {
                 document.location.reload();
             })
