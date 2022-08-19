@@ -1,3 +1,4 @@
+/* eslint-disable no-self-assign */
 import { useState } from "react";
 import { Badge, Button, ButtonGroup, Dropdown, Modal, Table } from "react-bootstrap";
 import { useParams } from "react-router-dom";
