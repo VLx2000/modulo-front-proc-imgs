@@ -1,4 +1,3 @@
-/* eslint-disable no-self-assign */
 import { useState } from "react";
 import { Badge, Button, ButtonGroup, Dropdown, Modal, Table } from "react-bootstrap";
 import { useParams } from "react-router-dom";
@@ -24,7 +23,7 @@ function ListaImgs({ images, arquivado }: Props) {
             .put('/images/' + params.idPaciente + '/archive/' + id)
             .then((res) => {
                 //alert("File Hide success");
-                window.location.href = window.location.href;
+                document.location.reload();
             })
             .catch((err) => alert("Erro ao modificar imagem" + err));
     }
@@ -35,7 +34,7 @@ function ListaImgs({ images, arquivado }: Props) {
             .delete('/images/' + params.idPaciente + '/delete/' + id)
             .then((res) => {
                 //alert("File Hide success");
-                window.location.href = window.location.href;
+                document.location.reload();
             })
             .catch((err) => alert("Erro ao deletar imagem" + err));
     }
@@ -46,7 +45,7 @@ function ListaImgs({ images, arquivado }: Props) {
         axiosInstance
             .put('/images/' + params.idPaciente + '/update/' + id, { aquisicao: new Date(aquisicao).toISOString() })
             .then((res) => {
-                window.location.href = window.location.href;
+                document.location.reload();
             })
             .catch((err) => alert("Erro ao atualizar aquisicao" + err));
     }
