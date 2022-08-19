@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Alert, Button, Container, Form } from "react-bootstrap";
+import { Alert, Button, Container, Form, Spinner } from "react-bootstrap";
 import { AuthContext } from "contexts/auth";
 import './styles.css';
 import { Link } from "react-router-dom";
@@ -19,31 +19,37 @@ function Login() {
 
     return (
         <Container className="login-container">
-            <Form onSubmit={submitHandler}>
-                <h3 className="titulo-pag">Login</h3>
-                {context?.error && <Alert variant="danger">Email ou senha incorretos!</Alert>}
-                <Form.Group controlId="email" className="mb-3">
-                    <Form.Label column sm="6">Email</Form.Label>
-                    <Form.Control
-                        required
-                        type="email"
-                        onChange={(e) => setEmail(e.target.value as string)}
-                        placeholder="name@example.com"
-                    />
-                </Form.Group>
-                <Form.Group controlId="senha" className="mb-3">
-                    <Form.Label column sm="6">Senha</Form.Label>
-                    <Form.Control
-                        required
-                        type="password"
-                        onChange={(e) => setPassword(e.target.value as string)}
-                    />
-                </Form.Group>
-                <Form.Group controlId="entrar" className="mb-3 div-botao-entrar">
-                    <Button type="submit">Entrar</Button>
-                </Form.Group>
-                <div>Não tem uma conta? <Link to={'/register'}>Registrar-se</Link></div>
-            </Form>
+            {context?.loading ?
+                <div className="d-flex justify-content-center">
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                </div> :
+                <Form onSubmit={submitHandler}>
+                    <h3 className="titulo-pag">Login</h3>
+                    {context?.error && <Alert variant="danger">Email ou senha incorretos!</Alert>}
+                    <Form.Group controlId="email" className="mb-3">
+                        <Form.Label column sm="6">Email</Form.Label>
+                        <Form.Control
+                            required
+                            type="email"
+                            onChange={(e) => setEmail(e.target.value as string)}
+                            placeholder="name@example.com"
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="senha" className="mb-3">
+                        <Form.Label column sm="6">Senha</Form.Label>
+                        <Form.Control
+                            required
+                            type="password"
+                            onChange={(e) => setPassword(e.target.value as string)}
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="entrar" className="mb-3 div-botao-entrar">
+                        <Button type="submit">Entrar</Button>
+                    </Form.Group>
+                    <div>Não tem uma conta? <Link to={'/register'}>Registrar-se</Link></div>
+                </Form>}
         </Container>
     );
 }

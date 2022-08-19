@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Alert, Button, Container, Form } from "react-bootstrap";
+import { Alert, Button, Container, Form, Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "utils/axios";
 import { Voltar } from "components";
@@ -76,7 +76,7 @@ function EditarPaciente() {
         <Container>
             <Voltar caminho={`/`} />
             {erro && <Alert variant="danger">{erro}</Alert>}
-            {carregado &&
+            {carregado ?
                 <Container className="login-container">
                     <Form onSubmit={submitHandler}>
                         <h3 className="titulo-pag">Editar paciente {paciente?.id}</h3>
@@ -113,6 +113,11 @@ function EditarPaciente() {
                         </Form.Group>
                     </Form>
                 </Container>
+                : <div className="d-flex justify-content-center">
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                </div>
             }
         </Container>
     );

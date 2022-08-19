@@ -1,6 +1,6 @@
 import { ListaPacientes } from 'components';
 import { useEffect, useState } from 'react';
-import { Button, Container, FormControl } from 'react-bootstrap';
+import { Button, Container, FormControl, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Paciente } from 'types/pacientes';
 import axiosInstance from 'utils/axios';
@@ -32,7 +32,7 @@ function Pacientes() {
                     placeholder="filtrar pacientes por id"
                     className="me-2"
                     aria-label="Search"
-                    /* onChange={handleFilter} */
+                /* onChange={handleFilter} */
                 />
                 {/* Ir para formulario de criação de pacientes */}
                 <div className="div-botao-novo">
@@ -41,8 +41,13 @@ function Pacientes() {
                     </Link>
                 </div>
             </header>
-            {carregado &&
+            {carregado ?
                 <ListaPacientes pacientes={pacientes} />
+                : <div className="d-flex justify-content-center">
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                </div>
             }
         </Container>
     );

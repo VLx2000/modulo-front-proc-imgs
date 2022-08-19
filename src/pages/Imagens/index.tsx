@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Button, FormControl, Tabs, Tab } from "react-bootstrap";
+import { Container, Button, FormControl, Tabs, Tab, Spinner } from "react-bootstrap";
 import { Image } from 'types/images';
 import { ListaImgs, Voltar } from "components";
 import { useParams, Link } from 'react-router-dom';
@@ -58,7 +58,7 @@ function ListaImagens() {
                     </Link>
                 </div>
             </header>
-            {carregado &&
+            {carregado ?
                 <Tabs defaultActiveKey="principais" id="tab-arquivo">
                     <Tab eventKey="principais" title="Minhas imagens">
                         {/* Listagem de imagens n arquivadas */}
@@ -69,6 +69,11 @@ function ListaImagens() {
                         <ListaImgs images={images.filter(img => img.arquivado)} arquivado={true} />
                     </Tab>
                 </Tabs>
+                : <div className="d-flex justify-content-center">
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                </div>
             }
         </Container>
     );

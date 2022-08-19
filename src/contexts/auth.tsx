@@ -41,7 +41,7 @@ const AuthProvider = ({ children }: any) => {
 
     const login = async (email: string, password: string) => {
         //console.log('login', { email, password });
-        
+        setLoading(true);
         await axiosInstance
             .post('/users/auth',
                 JSON.stringify({ email, password }),
@@ -52,7 +52,7 @@ const AuthProvider = ({ children }: any) => {
                 const token = res.data.token;
                 localStorage.setItem('user', JSON.stringify(loggedUser));
                 localStorage.setItem('token', token);
-
+                setLoading(false);
                 axiosInstance.defaults.headers = {
                     Authorization: `Bearer ${token}`
                 } as CommonHeaderProperties
@@ -61,7 +61,10 @@ const AuthProvider = ({ children }: any) => {
                 setError('');
                 navigate('/');
             })
-            .catch((err) => setError(err))
+            .catch((err) => {
+                setLoading(false);
+                setError(err);
+            })
     };
 
     const logout = () => {

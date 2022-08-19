@@ -23,7 +23,7 @@ function ListaImgs({ images, arquivado }: Props) {
             .put('/images/' + params.idPaciente + '/archive/' + id)
             .then((res) => {
                 //alert("File Hide success");
-                document.location.reload();
+                window.location.href = window.location.href;
             })
             .catch((err) => alert("Erro ao modificar imagem" + err));
     }
@@ -34,7 +34,7 @@ function ListaImgs({ images, arquivado }: Props) {
             .delete('/images/' + params.idPaciente + '/delete/' + id)
             .then((res) => {
                 //alert("File Hide success");
-                document.location.reload();
+                window.location.href = window.location.href;
             })
             .catch((err) => alert("Erro ao deletar imagem" + err));
     }
@@ -45,7 +45,7 @@ function ListaImgs({ images, arquivado }: Props) {
         axiosInstance
             .put('/images/' + params.idPaciente + '/update/' + id, { aquisicao: new Date(aquisicao).toISOString() })
             .then((res) => {
-                document.location.reload();
+                window.location.href = window.location.href;
             })
             .catch((err) => alert("Erro ao atualizar aquisicao" + err));
     }
