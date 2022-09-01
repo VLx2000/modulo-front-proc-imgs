@@ -5,3 +5,5 @@ export { default as Register} from "./Login/resgister";
 export { default as Pacientes} from "./Pacientes";
 export { default as NovoPaciente} from "./Pacientes/criar";
 export { default as EditarPaciente} from "./Pacientes/editar";
+export { default as ResetPasswordRequest} from "./Recuperar-senha";
+export { default as ResetPassword} from "./Recuperar-senha/[hash]";

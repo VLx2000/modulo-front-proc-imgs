@@ -44,6 +44,7 @@ function Login() {
                             type="password"
                             onChange={(e) => setPassword(e.target.value as string)}
                         />
+                        <Link to={'/reset'}>Esqueci minha senha</Link>
                     </Form.Group>
                     <Form.Group controlId="entrar" className="mb-3 div-botao-entrar">
                         <Button type="submit">Entrar</Button>
