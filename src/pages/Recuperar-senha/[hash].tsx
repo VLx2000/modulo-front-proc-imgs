@@ -23,21 +23,23 @@ const ResetPassword = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setSuccess("");
-    setLoading(true);
-    await axiosInstance
-      .post("/users/resetPassword", { password, token: hash })
-      .then(() => {
-        navigation('/')
-      })
-      .catch((err) =>
-        setError(
-          { data: err.response.data?.message } || {
-            data: "Um erro inesperado occoreu",
-          }
+    if(match) {
+      setSuccess("");
+      setLoading(true);
+      await axiosInstance
+        .post("/users/resetPassword", { password, token: hash })
+        .then(() => {
+          navigation('/')
+        })
+        .catch((err) =>
+          setError(
+            { data: err.response.data?.message } || {
+              data: "Um erro inesperado occoreu",
+            }
+          )
         )
-      )
-      .finally(() => setLoading(false));
+        .finally(() => setLoading(false));
+    }
   };
 
   useEffect(() => {
