@@ -1,24 +1,33 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { Pacientes, ListaImagens, UploadForm, Login, Register, NovoPaciente, EditarPaciente} from 'pages';
+import {
+  Pacientes,
+  ListaImagens,
+  UploadForm,
+  Login,
+  Register,
+  NovoPaciente,
+  EditarPaciente,
+  ResetPasswordRequest,
+  ResetPassword,
+} from "pages";
 import { Layout } from "layouts";
-import AuthProvider, { AuthContext } from './contexts/auth';
+import AuthProvider, { AuthContext } from "./contexts/auth";
 import { useContext } from "react";
 
 // uso de react router dom para mudança de pags
 function App() {
-
   const Private = ({ children }: any) => {
     const context = useContext(AuthContext);
 
     if (context?.loading) {
-      return <div>Carregando...</div>
+      return <div>Carregando...</div>;
     }
 
     if (!context?.authenticated) {
-      return <Navigate to='/login' />
+      return <Navigate to="/login" />;
     }
     return children;
-  }
+  };
 
   // rotas
   return (
@@ -27,37 +36,49 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/reset" element={<ResetPasswordRequest />} />
+          <Route path="/reset/confirm" element={<ResetPassword />} />
           <Route path="/" element={<Layout />}>
-            <Route 
-              index 
+            <Route
+              index
               element={
-              <Private>
-                <Pacientes />
-              </Private>} />
-            <Route 
-              path="/imagens/:idPaciente" 
+                <Private>
+                  <Pacientes />
+                </Private>
+              }
+            />
+            <Route
+              path="/imagens/:idPaciente"
               element={
                 <Private>
                   <ListaImagens />
-                </Private>} />
-            <Route 
+                </Private>
+              }
+            />
+            <Route
               path="/upload/:idPaciente"
               element={
-              <Private>
-                <UploadForm />
-              </Private>} />
-            <Route 
-              path="/editar/:idPaciente" 
+                <Private>
+                  <UploadForm />
+                </Private>
+              }
+            />
+            <Route
+              path="/editar/:idPaciente"
               element={
-              <Private>
-                <EditarPaciente />
-              </Private>} />
-            <Route 
-              path="/adicionar" 
+                <Private>
+                  <EditarPaciente />
+                </Private>
+              }
+            />
+            <Route
+              path="/adicionar"
               element={
-              <Private>
-                <NovoPaciente />
-              </Private>} />
+                <Private>
+                  <NovoPaciente />
+                </Private>
+              }
+            />
           </Route>
         </Routes>
       </AuthProvider>
