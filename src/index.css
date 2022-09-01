@@ -58,3 +58,7 @@ td a .btn {
 .header .form-control {
   width: auto !important;
 }
+
+form {
+  width: 400px;
+}

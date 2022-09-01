@@ -43,7 +43,7 @@ const ResetPassword = () => {
   };
 
   useEffect(() => {
-    if (!hash || hash.length != 64) navigation("/");
+    if (!hash || hash.length !== 64) navigation("/");
   }, [hash, navigation]);
 
   useEffect(() => {
@@ -83,13 +83,16 @@ const ResetPassword = () => {
             </Form.Label>
             <Form.Control
               required
+              isInvalid={!match}
               type="password"
               onChange={(e) => setPasswordConfirmation(e.target.value)}
             />
-            {!match && <Alert variant="danger" className="mt-4">As senhas não conferem</Alert>}
+            <Form.Control.Feedback type="invalid">
+              As senhas não conferem
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="entrar" className="mb-2 div-botao-enviar">
-            <Button type="submit">Enviar</Button>
+            <Button type="submit" disabled={!match}>Enviar</Button>
           </Form.Group>
         </Form>
       )}
