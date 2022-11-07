@@ -9,6 +9,7 @@ import {
   EditarPaciente,
   ResetPasswordRequest,
   ResetPassword,
+  Processamentos,
 } from "pages";
 import { Layout } from "layouts";
 import AuthProvider, { AuthContext } from "./contexts/auth";
@@ -76,6 +77,14 @@ function App() {
               element={
                 <Private>
                   <NovoPaciente />
+                </Private>
+              }
+            />
+            <Route
+              path="/imagens/:idPaciente/processamentos/:idImage"
+              element={
+                <Private>
+                  <Processamentos />
                 </Private>
               }
             />

@@ -109,6 +109,7 @@ function EditarPaciente() {
                         </Form.Group>
                         <Form.Group controlId="criar" className="mb-3 div-botao-entrar">
                             <Button variant="secondary" type="submit">Salvar</Button>
+                            <span> </span>
                             <Button variant="outline-danger" onClick={deletar}>Apagar paciente</Button>
                         </Form.Group>
                     </Form>

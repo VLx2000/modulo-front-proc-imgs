@@ -1,0 +1,40 @@
+/*form*/
+.upload-form {
+  margin-block: 5em;
+}
+
+.upload-button {
+  width: 100%;
+}
+
+.recarregar {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.progress-data {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+}
+
+.progress-data .progress {
+  height: auto;
+  font-size: inherit;
+  border-radius: 0.25em 0 0 0.25em;
+}
+
+.progress-data button {
+  border-radius: 0 0.25em 0.25em 0;
+}
+
+@media (min-width: 990px) {
+  .upload-form {
+    margin-inline: 15em;
+  }
+}
+
+@media (max-width: 991px) {
+  .upload-form {
+    margin-inline: 1em;
+  }
+}
