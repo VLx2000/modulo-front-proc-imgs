@@ -99,7 +99,7 @@ function ListaImgs({ images, arquivado }: Props) {
                                     </Modal.Footer>
                                 </Modal>
                                 <span> </span>
-                                <Link to={`/imagens/${params.idPaciente}/processamentos/${image.id}`}>
+                                <Link to={`/imagens/${params.idPaciente}/processamentos/${image.id}`} state={{ caminho: image.caminho }}>
                                     <Button variant="success">Ver/Executar Processamento</Button>
                                 </Link>
                             </td>

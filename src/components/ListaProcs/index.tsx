@@ -48,6 +48,33 @@ function ListaProcs({ processamentos }: Props) {
             return 'dark';
     }
 
+    function formatDate(dateString: string) {
+        let date = new Date(dateString);
+
+        let year: any = date.getFullYear();
+        let month: any = date.getMonth() + 1;
+        let day: any = date.getDate();
+        let hr: any = date.getHours();
+        let min: any = date.getMinutes();
+        let sec: any = date.getSeconds();
+        if (month < 10) {
+            month = '0' + month;
+        }
+        if (day < 10) {
+            day = '0' + day;
+        }
+        if (hr < 10) {
+            hr = '0' + hr;
+        }
+        if (min < 10) {
+            min = '0' + min;
+        }
+        if (sec < 10) {
+            sec = '0' + sec;
+        }
+        return day + '-' + month + '-' + year + ' ' + hr + ':' + min + ':' + sec;
+    }
+
     return (
         <div className="lista">
             {loading && <div className="d-flex justify-content-center">
@@ -62,7 +89,7 @@ function ListaProcs({ processamentos }: Props) {
                         <th>#id</th>
                         <th>Status</th>
                         <th>Início</th>
-                        <th>Fim</th>
+                        <th>Término</th>
                         <th>Serviço</th>
                         <th>Resultados</th>
                     </tr>
@@ -72,8 +99,13 @@ function ListaProcs({ processamentos }: Props) {
                         <tr key={proc.id}>
                             <td>{proc.id}</td>
                             <td><Badge pill bg={setColor(proc.status)}>{proc.status}</Badge>{' '}</td>
-                            <td>{proc.createdAt?.toString()}</td>
-                            <td>{proc.updatedAt?.toString() ?? '-'}</td>
+                            <td>{formatDate(proc.createdAt?.toString() as string)}</td>
+                            <td>{
+                                proc.status === ('PROCESSANDO' || 'SALVANDO')
+                                    ? '-'
+                                    : formatDate(proc.updatedAt?.toString() as string)
+                            }
+                            </td>
                             <td>{proc.nomeServico}</td>
                             <td>
                                 <Button
@@ -84,7 +116,7 @@ function ListaProcs({ processamentos }: Props) {
                                 </Button>
                             </td>
                         </tr>
-                    )).sort((a, b) =>  (b?.key! as number) - (a?.key! as number))}
+                    )).sort((a, b) => (b?.key! as number) - (a?.key! as number))}
                 </tbody>
             </Table>
             <div className='divMsg'><p>{processamentos?.length ?? 0} processamento(s)</p></div>
