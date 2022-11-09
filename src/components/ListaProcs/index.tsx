@@ -29,8 +29,8 @@ function ListaProcs({ processamentos }: Props) {
         axiosInstance
             .get('/resultados/download/' + idResult)
             .then((res) => {
-                console.log(res.headers)// por algum motivo n ta vindo infos no header
-                fileDownload(res.data, 'teste.nii'/* res.headers['content-disposition'].split('filename=')[1] */);
+                //console.log(res.headers)
+                fileDownload(res.data, res.headers['content-disposition'].split('filename=')[1]);
             })
             .catch((err) => alert("Erro ao atualizar aquisicao" + err));
     }
