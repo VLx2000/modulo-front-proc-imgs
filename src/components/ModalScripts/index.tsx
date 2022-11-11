@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Alert, Button, Form, Modal } from 'react-bootstrap';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import axiosInstance from 'utils/axios';
+import './styles.css';
 
 function ModalScripts() {
     const params = useParams();
@@ -15,8 +16,8 @@ function ModalScripts() {
     const [scriptEscolhido, setScriptEscolhido] = useState<string>('');
     const [nomeSaida, setNomeSaida] = useState<string>('saida');
 
-    const msgSucesso = 'Processamento concluído! Recarregue a pág para visualizar o resultado.';
-    const msgProcessando = 'Processamento iniciado! Recarregue a pág para acompanhar o processo.';
+    const msgSucesso = 'Processamento concluído!';
+    const msgProcessando = 'Processamento iniciado!';
     const msgErro = 'Ops. Algo deu errado!';
 
     useEffect(() => {
@@ -31,6 +32,7 @@ function ModalScripts() {
     }, []);
 
     function processar() {
+        setShow(false);
         let formData = new FormData();
         let script: any = [
         ]
@@ -48,7 +50,7 @@ function ModalScripts() {
         })
         formData.append('inputs', JSON.stringify(script));
         formData.append('idImage', params?.idImage!);
-
+        setNomeSaida('saida');
         setMessage(msgProcessando);
         axiosInstance
             .post(`/processamentos/execution/${scriptEscolhido}`, formData, {
@@ -87,52 +89,53 @@ function ModalScripts() {
     }
 
     return (
-        <>
-            <Button onClick={() => setShow(true)}>Novo processamento</Button>
-
+        <header className="header">
+            {message && //msg de estado do processamento
+                <Alert variant={corMsg()} className='alertMsg'>
+                    <span>{message}</span>
+                </Alert>
+            }
+            <div className="div-botao-novo">
+                <Button onClick={() => { setShow(true); setMessage(''); }}>Novo processamento</Button>
+            </div>
             <Modal show={show} onHide={() => setShow(false)} centered>
                 <Modal.Header closeButton>
                     <Modal.Title>Executar script</Modal.Title>
                 </Modal.Header>
-                {message && //caso em q terminou o proc ou houve algum erro
-                    <Alert variant={corMsg()}>
-                        <span>{message + ' '}</span>
-                        <Link reloadDocument to={""}>
-                            <span className="recarregar">Recarregar página</span>
-                        </Link>
-                    </Alert>
-                }
                 <Modal.Body>
                     <Form.Group className="mb-3">
                         <Form.Label>Escolha o script de processamento a ser executado:</Form.Label>
                         <Form.Select id='select' onChange={event => setScript(event.target.value)}>
-                            {scripts && Object.keys(scripts).map(
-                                (item: any) => <option key={item} value={item}>{item}</option>
+                        {scripts && Object.keys(scripts).map(
+                                (item: any) => 
+                                    item === scriptEscolhido 
+                                        ? <option key={item} value={item} selected >{item}</option>
+                                        : <option key={item} value={item} >{item}</option>
                             )}
                         </Form.Select>
                     </Form.Group>
                     {scriptEscolhidoData && Object.values(scriptEscolhidoData.inputs).map(
                         (item: any) =>
                         item.type === 'file' ?
-                            <Form.Group className="mb-3">
-                                <Form.Label>Caminho imagem</Form.Label>
-                                <Form.Control type="text" defaultValue={`uploads/salvos/${caminho}`} disabled />
+                            <Form.Group className="mb-3" key={item.flag}>
+                                <Form.Label>{item.flag}</Form.Label>
+                                <Form.Control type="text" value={`uploads/salvos/${caminho}`} disabled />
                             </Form.Group> : 
                         item.type === 'string' ?
-                            <Form.Group className="mb-3">
-                                <Form.Label>Nome do arquivo de saída</Form.Label>
-                                <Form.Control type="text" defaultValue={item.name} onChange={handleNomeSaida} />
+                            <Form.Group className="mb-3" key={item.flag}>
+                                <Form.Label>{item.flag}</Form.Label>
+                                <Form.Control type="text" onChange={handleNomeSaida} />
                             </Form.Group> :
                         item.type === 'static file array' ?
-                            <Form.Group className="mb-3">
-                                <Form.Label>Arquivos estáticos</Form.Label>
-                                <Form.Control type="text" defaultValue={item.filenames} disabled />
+                            <Form.Group className="mb-3" key={item.flag}>
+                                <Form.Label>{item.flag}</Form.Label>
+                                <Form.Control type="text" value={item.filenames} disabled />
                             </Form.Group> : 
                         item.type === 'static file' ?
                             <>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Arquivo estático</Form.Label>
-                                <Form.Control type="text" defaultValue={item.filename} disabled />
+                            <Form.Group className="mb-3" key={item.flag}>
+                                <Form.Label>{item.flag}</Form.Label>
+                                <Form.Control type="text" value={item.filename} disabled />
                             </Form.Group> </>:<div>{item.toString()}</div>
                     )}
                 </Modal.Body>
@@ -142,7 +145,7 @@ function ModalScripts() {
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </>
+        </header>
     );
 }
 
