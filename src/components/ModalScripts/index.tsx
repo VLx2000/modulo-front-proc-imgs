@@ -11,7 +11,8 @@ function ModalScripts() {
     const [show, setShow] = useState(false);
     const [message, setMessage] = useState<string>('');
     const [scripts, setScripts] = useState<any>();
-    const [scriptEscolhido, setScriptEscolhido] = useState<any>();
+    const [scriptEscolhidoData, setScriptEscolhidoData] = useState<any>();
+    const [scriptEscolhido, setScriptEscolhido] = useState<string>('');
     const [nomeSaida, setNomeSaida] = useState<string>('saida');
 
     const msgSucesso = 'Processamento concluído! Recarregue a pág para visualizar o resultado.';
@@ -23,25 +24,34 @@ function ModalScripts() {
             .get('/processamentos/scripts')
             .then((res) => {
                 setScripts(res.data);
-                setScriptEscolhido(Object.values(res.data)[0]);
-                console.log(Object.values(res.data)[0])
+                setScriptEscolhidoData(Object.values(res.data)[0]);
+                setScriptEscolhido(Object.keys(res.data)[0])
             })
             .catch((error) => alert('Erro' + error));
     }, []);
 
     function processar() {
         let formData = new FormData();
-        let script = [
-            { filename: `uploads/salvos/${caminho}`, },
-            {},
-            { name: nomeSaida }
+        let script: any = [
         ]
+        scriptEscolhidoData.inputs.forEach(input => {
+            if(input.type === 'file') {
+                script.push({ filename: `uploads/salvos/${caminho}` })
+            } else if(input.type === 'static file array' || input.type === 'static file') {
+                script.push({ })
+            } else if(input.type === 'string') {
+                script.push({ name: nomeSaida })
+            } else {
+                script.push({ })
+            }
+
+        })
         formData.append('inputs', JSON.stringify(script));
         formData.append('idImage', params?.idImage!);
-        console.log(formData)
+
         setMessage(msgProcessando);
         axiosInstance
-            .post('/processamentos/execution/skull_striping', formData, {
+            .post(`/processamentos/execution/${scriptEscolhido}`, formData, {
                 headers: { 'content-type': 'multipart/form-data' }
             }).then((res) => {
                 setMessage(msgSucesso);
@@ -71,9 +81,9 @@ function ModalScripts() {
         }
     }
 
-    function setScript(){
-        let selected = document.getElementById('select') as HTMLSelectElement;
-        setScriptEscolhido(scripts[selected.options[selected.selectedIndex].value]);
+    function setScript(selectedValue){
+        setScriptEscolhido(selectedValue);
+        setScriptEscolhidoData(scripts[selectedValue]);
     }
 
     return (
@@ -95,13 +105,13 @@ function ModalScripts() {
                 <Modal.Body>
                     <Form.Group className="mb-3">
                         <Form.Label>Escolha o script de processamento a ser executado:</Form.Label>
-                        <Form.Select id='select' onChange={() => setScript()}>
+                        <Form.Select id='select' onChange={event => setScript(event.target.value)}>
                             {scripts && Object.keys(scripts).map(
                                 (item: any) => <option key={item} value={item}>{item}</option>
                             )}
                         </Form.Select>
                     </Form.Group>
-                    {scriptEscolhido && Object.values(scriptEscolhido.inputs).map(
+                    {scriptEscolhidoData && Object.values(scriptEscolhidoData.inputs).map(
                         (item: any) =>
                         item.type === 'file' ?
                             <Form.Group className="mb-3">
@@ -117,7 +127,13 @@ function ModalScripts() {
                             <Form.Group className="mb-3">
                                 <Form.Label>Arquivos estáticos</Form.Label>
                                 <Form.Control type="text" defaultValue={item.filenames} disabled />
-                            </Form.Group> : <div>{item.toString()}</div>
+                            </Form.Group> : 
+                        item.type === 'static file' ?
+                            <>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Arquivo estático</Form.Label>
+                                <Form.Control type="text" defaultValue={item.filename} disabled />
+                            </Form.Group> </>:<div>{item.toString()}</div>
                     )}
                 </Modal.Body>
                 <Modal.Footer>
