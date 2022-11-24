@@ -36,16 +36,12 @@ function ListaProcs({ processamentos }: Props) {
     }
 
     function setColor(status: string) {
-        if (status === 'PROCESSANDO')
-            return 'warning';
-        else if (status === 'SALVANDO')
-            return 'info';
-        else if (status === 'PROCESSADO')
+        if (status.match('PROCESSADO'))
             return 'success';
-        else if (status === 'ERRO')
+        else if (status.match('ERRO'))
             return 'danger';
         else
-            return 'dark';
+            return 'primary';
     }
 
     function formatDate(dateString: string) {
@@ -101,7 +97,7 @@ function ListaProcs({ processamentos }: Props) {
                             <td><Badge pill bg={setColor(proc.status)}>{proc.status}</Badge>{' '}</td>
                             <td>{formatDate(proc.createdAt?.toString() as string)}</td>
                             <td>{
-                                proc.status === ('PROCESSANDO' || 'SALVANDO')
+                                proc.status.match('PROCESSANDO')
                                     ? '-'
                                     : formatDate(proc.updatedAt?.toString() as string)
                             }
@@ -109,7 +105,7 @@ function ListaProcs({ processamentos }: Props) {
                             <td>{proc.nomeServico}</td>
                             <td>
                                 <Button
-                                    disabled={proc.status !== 'PROCESSADO'}
+                                    disabled={!proc.status.match('PROCESSADO')}
                                     variant="success"
                                     onClick={() => getResults(proc.id)}>
                                     Baixar

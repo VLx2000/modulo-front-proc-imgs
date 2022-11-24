@@ -31,7 +31,7 @@ function ModalScripts() {
             .catch((error) => alert('Erro' + error));
     }, []);
 
-    function processar() {
+/*     function processar() {
         setShow(false);
         let formData = new FormData();
         let script: any = [
@@ -55,6 +55,24 @@ function ModalScripts() {
         axiosInstance
             .post(`/processamentos/execution/${scriptEscolhido}`, formData, {
                 headers: { 'content-type': 'multipart/form-data' }
+            }).then((res) => {
+                setMessage(msgSucesso);
+            })
+            .catch((error) => {
+                const code = error?.response?.data?.code;
+                switch (code) {
+                    default:
+                        setMessage(msgErro);
+                        break;
+                }
+            })
+    } */
+
+    function processar() {
+        setMessage(msgProcessando);
+        axiosInstance
+            .post('http://localhost:5000', JSON.stringify({ caminho: caminho, idImage: params?.idImage!}), {
+                headers: { 'content-type': 'application/json' }
             }).then((res) => {
                 setMessage(msgSucesso);
             })
@@ -96,7 +114,7 @@ function ModalScripts() {
                 </Alert>
             }
             <div className="div-botao-novo">
-                <Button onClick={() => { setShow(true); setMessage(''); }}>Novo processamento</Button>
+                <Button onClick={() => { processar();/* setShow(true); */ setMessage(''); }}>Novo processamento</Button>
             </div>
             <Modal show={show} onHide={() => setShow(false)} centered>
                 <Modal.Header closeButton>
