@@ -31,12 +31,12 @@ function ModalScripts() {
             .catch((error) => alert('Erro' + error));
     }, []);
 
-/*     function processar() {
+    function processar() {
         setShow(false);
         let formData = new FormData();
         let script: any = [
         ]
-        scriptEscolhidoData.inputs.forEach(input => {
+        scriptEscolhidoData.inputs.forEach((input: { type: string; }) => {
             if(input.type === 'file') {
                 script.push({ filename: `uploads/salvos/${caminho}` })
             } else if(input.type === 'static file array' || input.type === 'static file') {
@@ -55,24 +55,6 @@ function ModalScripts() {
         axiosInstance
             .post(`/processamentos/execution/${scriptEscolhido}`, formData, {
                 headers: { 'content-type': 'multipart/form-data' }
-            }).then((res) => {
-                setMessage(msgSucesso);
-            })
-            .catch((error) => {
-                const code = error?.response?.data?.code;
-                switch (code) {
-                    default:
-                        setMessage(msgErro);
-                        break;
-                }
-            })
-    } */
-
-    function processar() {
-        setMessage(msgProcessando);
-        axiosInstance
-            .post('http://localhost:5000', JSON.stringify({ caminho: caminho, idImage: params?.idImage!}), {
-                headers: { 'content-type': 'application/json' }
             }).then((res) => {
                 setMessage(msgSucesso);
             })
@@ -114,7 +96,7 @@ function ModalScripts() {
                 </Alert>
             }
             <div className="div-botao-novo">
-                <Button onClick={() => { processar();/* setShow(true); */ setMessage(''); }}>Novo processamento</Button>
+                <Button onClick={() => { setShow(true); setMessage(''); }}>Novo processamento</Button>
             </div>
             <Modal show={show} onHide={() => setShow(false)} centered>
                 <Modal.Header closeButton>
@@ -135,23 +117,23 @@ function ModalScripts() {
                     {scriptEscolhidoData && Object.values(scriptEscolhidoData.inputs).map(
                         (item: any) =>
                         item.type === 'file' ?
-                            <Form.Group className="mb-3" key={item.flag}>
+                            <Form.Group className="mb-3" key={item.flag} hidden>
                                 <Form.Label>{item.flag}</Form.Label>
                                 <Form.Control type="text" value={`uploads/salvos/${caminho}`} disabled />
                             </Form.Group> : 
                         item.type === 'string' ?
                             <Form.Group className="mb-3" key={item.flag}>
-                                <Form.Label>{item.flag}</Form.Label>
+                                <Form.Label>Nome dos arquivos de saída:</Form.Label>
                                 <Form.Control type="text" onChange={handleNomeSaida} />
                             </Form.Group> :
                         item.type === 'static file array' ?
-                            <Form.Group className="mb-3" key={item.flag}>
+                            <Form.Group className="mb-3" key={item.flag} hidden>
                                 <Form.Label>{item.flag}</Form.Label>
                                 <Form.Control type="text" value={item.filenames} disabled />
                             </Form.Group> : 
                         item.type === 'static file' ?
                             <>
-                            <Form.Group className="mb-3" key={item.flag}>
+                            <Form.Group className="mb-3" key={item.flag} hidden>
                                 <Form.Label>{item.flag}</Form.Label>
                                 <Form.Control type="text" value={item.filename} disabled />
                             </Form.Group> </>:<div>{item.toString()}</div>

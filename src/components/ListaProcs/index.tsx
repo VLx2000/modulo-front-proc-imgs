@@ -71,6 +71,23 @@ function ListaProcs({ processamentos }: Props) {
         return day + '-' + month + '-' + year + ' ' + hr + ':' + min + ':' + sec;
     }
 
+    function isLoading(status: string) {
+        if (status === 'ERRO' || status === 'PROCESSADO' || status === 'INTERROMPIDO') {
+            return <span>{status}</span>
+        }
+        else {
+            return <span>
+                        <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                        /> {status}...
+                    </span>
+        }
+    }
+
     return (
         <div className="lista">
             {loading && <div className="d-flex justify-content-center">
@@ -94,7 +111,7 @@ function ListaProcs({ processamentos }: Props) {
                     {processamentos.map(proc => (
                         <tr key={proc.id}>
                             <td>{proc.id}</td>
-                            <td><Badge pill bg={setColor(proc.status)}>{proc.status}</Badge>{' '}</td>
+                            <td><Badge pill bg={setColor(proc.status)}>{isLoading(proc.status)}</Badge>{' '}</td>
                             <td>{formatDate(proc.createdAt?.toString() as string)}</td>
                             <td>{
                                 proc.status.match('PROCESSANDO')
