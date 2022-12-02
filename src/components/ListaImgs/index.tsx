@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, Modal, Table } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { Image } from "types/images";
+import { alertMsgSwitch } from "utils/alertMsg";
 import axiosInstance from "utils/axios";
 import './styles.css';
 
@@ -15,6 +16,10 @@ function ListaImgs({ images, arquivado }: Props) {
 
     const params = useParams();
     const [show, setShow] = useState(false);
+
+    const [error, setError] = useState<any | null>(null);
+    const [showError, setShowError] = useState(false);
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -25,7 +30,11 @@ function ListaImgs({ images, arquivado }: Props) {
             .then((res) => {
                 document.location.reload();
             })
-            .catch((err) => alert("Erro ao modificar imagem" + err));
+            .catch((error) => {
+                const code = error?.response?.status;
+                setError(alertMsgSwitch(code, 'Erro ao editar imagem', setError));
+                setShowError(true);
+            });
     }
 
     // apaga imagem
@@ -35,7 +44,11 @@ function ListaImgs({ images, arquivado }: Props) {
             .then((res) => {
                 document.location.reload();
             })
-            .catch((err) => alert("Erro ao deletar imagem" + err));
+            .catch((error) => {
+                const code = error?.response?.status;
+                setError(alertMsgSwitch(code, 'Erro ao deletar imagem', setError));
+                setShowError(true);
+            });
     }
 
     // atualiza aquisicao da imagem
@@ -45,11 +58,16 @@ function ListaImgs({ images, arquivado }: Props) {
             .then((res) => {
                 document.location.reload();
             })
-            .catch((err) => alert("Erro ao atualizar aquisicao" + err));
+            .catch((error) => {
+                const code = error?.response?.status;
+                setError(alertMsgSwitch(code, 'Erro ao atualizar aquisição', setError));
+                setShowError(true);
+            });
     }
 
     return (
         <div className="lista">
+            {showError && error}
             <Table striped bordered responsive>
                 <thead>
                     <tr>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Alert, Button, Form, Modal } from 'react-bootstrap';
 import { useLocation, useParams } from 'react-router-dom';
+import { alertMsgSwitch } from 'utils/alertMsg';
 import axiosInstance from 'utils/axios';
 import './styles.css';
 
@@ -16,6 +17,9 @@ function ModalScripts() {
     const [scriptEscolhido, setScriptEscolhido] = useState<string>('');
     const [nomeSaida, setNomeSaida] = useState<string>('saida');
 
+    const [error, setError] = useState<any | null>(null);
+    const [showError, setShowError] = useState(false);
+
     const msgSucesso = 'Processamento concluído!';
     const msgProcessando = 'Processamento iniciado!';
     const msgErro = 'Ops. Algo deu errado!';
@@ -28,7 +32,11 @@ function ModalScripts() {
                 setScriptEscolhidoData(Object.values(res.data)[0]);
                 setScriptEscolhido(Object.keys(res.data)[0])
             })
-            .catch((error) => alert('Erro' + error));
+            .catch((error) => {
+                const code = error?.response?.status;
+                setError(alertMsgSwitch(code, 'Erro ao buscar scripts', setError));
+                setShowError(true);
+            });
     }, []);
 
     function processar() {
@@ -102,6 +110,7 @@ function ModalScripts() {
                 <Modal.Header closeButton>
                     <Modal.Title>Executar script</Modal.Title>
                 </Modal.Header>
+                {showError && error}
                 <Modal.Body>
                     <Form.Group className="mb-3">
                         <Form.Label>Escolha o script de processamento a ser executado:</Form.Label>

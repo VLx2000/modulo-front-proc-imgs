@@ -2,6 +2,7 @@ import fileDownload from "js-file-download";
 import { useState } from "react";
 import { Badge, Button, Spinner, Table } from "react-bootstrap";
 import { Processamento } from "types/processamentos";
+import { alertMsgSwitch } from "utils/alertMsg";
 import axiosInstance from "utils/axios";
 import './styles.css';
 
@@ -14,6 +15,9 @@ function ListaProcs({ processamentos }: Props) {
 
     const [loading, setLoading] = useState<boolean>(false);
 
+    const [error, setError] = useState<any | null>(null);
+    const [showError, setShowError] = useState(false);
+
     function getResults(idProc: number) {
         setLoading(true);
         axiosInstance
@@ -21,7 +25,11 @@ function ListaProcs({ processamentos }: Props) {
             .then((res) => {
                 res.data.map((result: { id: number; }) => downloadResult(result.id))
             })
-            .catch((err) => alert("Erro ao atualizar aquisicao" + err))
+            .catch((error) => {
+                const code = error?.response?.status;
+                setError(alertMsgSwitch(code, 'Erro ao baixar resultados', setError));
+                setShowError(true);
+            })
             .finally(() => setLoading(false));
     }
 
@@ -32,7 +40,7 @@ function ListaProcs({ processamentos }: Props) {
                 //console.log(res.headers)
                 fileDownload(res.data, res.headers['content-disposition'].split('filename=')[1]);
             })
-            .catch((err) => alert("Erro ao atualizar aquisicao" + err));
+            .catch((err) => console.log("Erro ao baixar resultado #" + idResult));
     }
 
     function setColor(status: string) {
@@ -96,6 +104,7 @@ function ListaProcs({ processamentos }: Props) {
                 </Spinner>
             </div>
             }
+            {showError && error}
             <Table striped bordered responsive>
                 <thead>
                     <tr>

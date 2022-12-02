@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Alert, Button, Container, Form, Spinner } from "react-bootstrap";
+import { Button, Container, Form, Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "utils/axios";
 import { Voltar } from "components";
 import { Paciente } from "types/pacientes";
+import { alertMsgSwitch } from "utils/alertMsg";
 
 // component q exibe form para editar paciente
 function EditarPaciente() {
@@ -11,13 +12,15 @@ function EditarPaciente() {
     const params = useParams();
     const navigate = useNavigate();
 
-    const [erro, setErro] = useState<string>('');
     const [carregado, setCarregado] = useState<Boolean>(false);
     const [paciente, setPaciente] = useState<Paciente>();
 
     const [apelido, setApelido] = useState<string>('');
     const [sexo, setSexo] = useState<string>('');
     const [nascimento, setNascimento] = useState<Date>();
+
+    const [error, setError] = useState<any | null>(null);
+    const [showError, setShowError] = useState(false);
 
     useEffect(() => {
         axiosInstance
@@ -28,21 +31,13 @@ function EditarPaciente() {
                 setApelido(data?.apelido);
                 setSexo(data?.sexo);
                 setNascimento(data?.nascimento);
-                //console.table(data)
-                setCarregado(true);
             })
             .catch((error) => {
                 const code = error?.response?.status;
-                console.log(code)
-                switch (code) {
-                    case 404:
-                        setErro("Paciente não encontrado");
-                        break;
-                    default:
-                        setErro("Ops. Algo deu errado");
-                        break;
-                }
-            });
+                setError(alertMsgSwitch(code, 'Paciente não encontrado', setError));
+                setShowError(true);
+            })
+            .finally(() => setCarregado(true));
     }, [paciente?.apelido, paciente?.nascimento, paciente?.sexo, params.idPaciente]);
 
     const submitHandler = async (e: { preventDefault: () => void; }) => {
@@ -57,7 +52,9 @@ function EditarPaciente() {
                 navigate('/');
             })
             .catch((error) => {
-                console.log('epa')
+                const code = error?.response?.status;
+                setError(alertMsgSwitch(code, 'Erro ao editar paciente', setError));
+                setShowError(true);
             });
     };
 
@@ -68,18 +65,20 @@ function EditarPaciente() {
                 navigate('/');
             })
             .catch((error) => {
-                console.log('epa')
+                const code = error?.response?.status;
+                setError(alertMsgSwitch(code, 'Erro ao deletar paciente', setError));
+                setShowError(true);
             });
     };
 
     return (
         <Container>
             <Voltar caminho={`/`} />
-            {erro && <Alert variant="danger">{erro}</Alert>}
             {carregado ?
                 <Container className="login-container">
                     <Form onSubmit={submitHandler}>
                         <h3 className="titulo-pag">Editar paciente {paciente?.id}</h3>
+                        {showError && error}
                         <Form.Group controlId="apelido" className="mb-3">
                             <Form.Label column sm="6">Apelido</Form.Label>
                             <Form.Control
