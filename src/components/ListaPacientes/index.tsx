@@ -13,6 +13,7 @@ function ListaPacientes({ pacientes }: Props) {
 
     return (
         <div className="lista row">
+            <div className='divMsg'><p>{pacientes?.length ?? 0} paciente(s)</p></div>
             {pacientes.map(paciente => (
                 <div key={paciente.id} className="col-sm-12 col-lg-6 col-xl-4 mb-3">
                     <Card className="card-paciente">
@@ -33,7 +34,6 @@ function ListaPacientes({ pacientes }: Props) {
                     </Card>
                 </div>
             ))}
-            <div className='divMsg'><p>{pacientes.length} paciente(s)</p></div>
         </div>
     );
 }

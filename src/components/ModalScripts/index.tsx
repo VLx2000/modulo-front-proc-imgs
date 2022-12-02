@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useLocation, useParams } from 'react-router-dom';
 import { alertMsgSwitch } from 'utils/alertMsg';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from 'utils/axios';
 import './styles.css';
@@ -61,19 +61,22 @@ function ModalScripts() {
         formData.append('idImage', params?.idImage!);
         setNomeSaida('resultado_processado');
         toast.info(msgProcessando, {
-            position: toast.POSITION.BOTTOM_CENTER
+            position: toast.POSITION.BOTTOM_CENTER,
+            theme: 'colored'
         });
         axiosInstance
             .post(`/processamentos/execution/${scriptEscolhido}`, formData, {
                 headers: { 'content-type': 'multipart/form-data' }
             }).then((res) => {
                 toast.success(msgSucesso, {
-                    position: toast.POSITION.BOTTOM_CENTER
+                    position: toast.POSITION.BOTTOM_CENTER,
+                    theme: 'colored'
                 });
             })
             .catch((error) => {
                 toast.error(msgErro, {
-                    position: toast.POSITION.BOTTOM_CENTER
+                    position: toast.POSITION.BOTTOM_CENTER,
+                    theme: 'colored'
                 });
             })
     }
@@ -92,7 +95,6 @@ function ModalScripts() {
 
     return (
         <header className="header">
-            <ToastContainer />
             <div className="div-botao-novo">
                 <Button onClick={() => { setShow(true); }}>Novo processamento</Button>
             </div>

@@ -11,6 +11,7 @@ function Pacientes() {
 
     const [carregado, setCarregado] = useState<Boolean>(false);
     const [pacientes, setPacientes] = useState<Paciente[]>([]);
+    const [allPacientes, setAllPacientes] = useState<Paciente[]>([]);
 
     const [error, setError] = useState<any | null>(null);
     const [showError, setShowError] = useState(false);
@@ -21,6 +22,7 @@ function Pacientes() {
             .then((res) => {
                 const data = res.data as Paciente[];
                 setPacientes(data);
+                setAllPacientes(data);
             })
             .catch((error) => {
                 const code = error?.response?.status;
@@ -30,16 +32,30 @@ function Pacientes() {
             .finally(() => setCarregado(true));
     }, []);
 
+    function handleFilter(event: React.ChangeEvent<HTMLInputElement>) {
+        const filter = event.target.value;
+        if (filter === '') {
+            setPacientes(allPacientes);
+        }
+        else {
+            setPacientes(allPacientes.filter(paciente => 
+                    paciente.id.toString().includes(filter) || 
+                    paciente.apelido.toString().includes(filter) 
+                )
+            );
+        }
+    }
+
     return (
         <Container>
             <h3 className="titulo-pag">Lista de Pacientes</h3>
             <header className="header">
                 <FormControl
                     type="search"
-                    placeholder="filtrar pacientes por id"
+                    placeholder="filtrar por id ou apelido"
                     className="me-2"
                     aria-label="Search"
-                /* onChange={handleFilter} */
+                    onChange={handleFilter}
                 />
                 {/* Ir para formulario de criação de pacientes */}
                 <div className="div-botao-novo">

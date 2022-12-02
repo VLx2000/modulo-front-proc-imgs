@@ -68,11 +68,11 @@ function ListaImagens() {
             {showError && error}
             {carregado ?
                 <Tabs defaultActiveKey="principais" id="tab-arquivo">
-                    <Tab eventKey="principais" title="Minhas imagens">
+                    <Tab eventKey="principais" title={`Minhas imagens (${images?.filter(img => !img.arquivado).length ?? 0})`}>
                         {/* Listagem de imagens n arquivadas */}
                         <ListaImgs images={images.filter(img => !img.arquivado)} arquivado={false} />
                     </Tab>
-                    <Tab eventKey="arquivados" title="Arquivadas">
+                    <Tab eventKey="arquivados" title={`Arquivadas (${images?.filter(img => img.arquivado).length ?? 0})`} >
                         {/* Listagem de imagens arquivadas */}
                         <ListaImgs images={images.filter(img => img.arquivado)} arquivado={true} />
                     </Tab>

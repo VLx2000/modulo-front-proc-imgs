@@ -125,7 +125,6 @@ function ListaImgs({ images, arquivado }: Props) {
                     ))}
                 </tbody>
             </Table>
-            <div className='divMsg'><p>{images.length} imagem(ns) {arquivado && 'arquivadas'}</p></div>
         </div>
     );
 }

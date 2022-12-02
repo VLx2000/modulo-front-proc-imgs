@@ -105,6 +105,7 @@ function ListaProcs({ processamentos }: Props) {
             </div>
             }
             {showError && error}
+            <div className='divMsg'><p>{processamentos?.length ?? 0} processamento(s)</p></div>
             <Table striped bordered responsive>
                 <thead>
                     <tr>
@@ -123,9 +124,9 @@ function ListaProcs({ processamentos }: Props) {
                             <td><Badge pill bg={setColor(proc.status)}>{isLoading(proc.status)}</Badge>{' '}</td>
                             <td>{formatDate(proc.createdAt?.toString() as string)}</td>
                             <td>{
-                                proc.status.match('PROCESSANDO')
-                                    ? '-'
-                                    : formatDate(proc.updatedAt?.toString() as string)
+                                proc.status.match('PROCESSADO')
+                                    ? formatDate(proc.updatedAt?.toString() as string)
+                                    : '-'
                             }
                             </td>
                             <td>{proc.nomeServico}</td>
@@ -141,7 +142,6 @@ function ListaProcs({ processamentos }: Props) {
                     )).sort((a, b) => (b?.key! as number) - (a?.key! as number))}
                 </tbody>
             </Table>
-            <div className='divMsg'><p>{processamentos?.length ?? 0} processamento(s)</p></div>
         </div>
     );
 }
