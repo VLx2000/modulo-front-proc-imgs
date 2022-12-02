@@ -9,3 +9,8 @@
 ```
 npm install && npm start
 ``` 
+
+### Para executar com docker
+```
+docker-compose up
+``` 
