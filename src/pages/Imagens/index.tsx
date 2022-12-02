@@ -4,6 +4,7 @@ import { Image } from 'types/images';
 import { ListaImgs, Voltar } from "components";
 import { useParams, Link } from 'react-router-dom';
 import axiosInstance from "utils/axios";
+import { alertMsgSwitch } from "utils/alertMsg";
 
 // pag q sera acessada ao clicar em algum paciente
 function ListaImagens() {
@@ -12,7 +13,10 @@ function ListaImagens() {
 
     const [carregado, setCarregado] = useState<Boolean>(false);
     const [images, setImages] = useState<Image[]>([]);
-    const [allImages, setAllImages] = useState<Image[]>([])
+    const [allImages, setAllImages] = useState<Image[]>([]);
+
+    const [error, setError] = useState<any | null>(null);
+    const [showError, setShowError] = useState(false);
 
     useEffect(() => {
         axiosInstance
@@ -21,10 +25,13 @@ function ListaImagens() {
                 const data = res.data as Image[];
                 setImages(data);
                 setAllImages(data);
-                //console.table(data)
-                setCarregado(true);
             })
-            .catch((err) => alert("Erro ao carregar imagens" + err));
+            .catch((error) => {
+                const code = error?.response?.status;
+                setError(alertMsgSwitch(code, 'Erro ao carregar imagens', setError));
+                setShowError(true);
+            })
+            .finally(() => setCarregado(true));
     }, [params.idPaciente]);
 
     function handleFilter(event: React.ChangeEvent<HTMLInputElement>) {
@@ -58,6 +65,7 @@ function ListaImagens() {
                     </Link>
                 </div>
             </header>
+            {showError && error}
             {carregado ?
                 <Tabs defaultActiveKey="principais" id="tab-arquivo">
                     <Tab eventKey="principais" title="Minhas imagens">

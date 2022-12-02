@@ -2,6 +2,7 @@ import fileDownload from "js-file-download";
 import { useState } from "react";
 import { Badge, Button, Spinner, Table } from "react-bootstrap";
 import { Processamento } from "types/processamentos";
+import { alertMsgSwitch } from "utils/alertMsg";
 import axiosInstance from "utils/axios";
 import './styles.css';
 
@@ -14,6 +15,9 @@ function ListaProcs({ processamentos }: Props) {
 
     const [loading, setLoading] = useState<boolean>(false);
 
+    const [error, setError] = useState<any | null>(null);
+    const [showError, setShowError] = useState(false);
+
     function getResults(idProc: number) {
         setLoading(true);
         axiosInstance
@@ -21,7 +25,11 @@ function ListaProcs({ processamentos }: Props) {
             .then((res) => {
                 res.data.map((result: { id: number; }) => downloadResult(result.id))
             })
-            .catch((err) => alert("Erro ao atualizar aquisicao" + err))
+            .catch((error) => {
+                const code = error?.response?.status;
+                setError(alertMsgSwitch(code, 'Erro ao baixar resultados', setError));
+                setShowError(true);
+            })
             .finally(() => setLoading(false));
     }
 
@@ -29,23 +37,19 @@ function ListaProcs({ processamentos }: Props) {
         axiosInstance
             .get('/resultados/download/' + idResult)
             .then((res) => {
-                console.log(res.headers)// por algum motivo n ta vindo infos no header
-                fileDownload(res.data, 'teste.nii'/* res.headers['content-disposition'].split('filename=')[1] */);
+                //console.log(res.headers)
+                fileDownload(res.data, res.headers['content-disposition'].split('filename=')[1]);
             })
-            .catch((err) => alert("Erro ao atualizar aquisicao" + err));
+            .catch((err) => console.log("Erro ao baixar resultado #" + idResult));
     }
 
     function setColor(status: string) {
-        if (status === 'PROCESSANDO')
-            return 'warning';
-        else if (status === 'SALVANDO')
-            return 'info';
-        else if (status === 'PROCESSADO')
+        if (status.match('PROCESSADO'))
             return 'success';
-        else if (status === 'ERRO')
+        else if (status.match('ERRO'))
             return 'danger';
         else
-            return 'dark';
+            return 'primary';
     }
 
     function formatDate(dateString: string) {
@@ -75,6 +79,23 @@ function ListaProcs({ processamentos }: Props) {
         return day + '-' + month + '-' + year + ' ' + hr + ':' + min + ':' + sec;
     }
 
+    function isLoading(status: string) {
+        if (status === 'ERRO' || status === 'PROCESSADO' || status === 'INTERROMPIDO') {
+            return <span>{status}</span>
+        }
+        else {
+            return <span>
+                        <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                        /> {status}...
+                    </span>
+        }
+    }
+
     return (
         <div className="lista">
             {loading && <div className="d-flex justify-content-center">
@@ -83,6 +104,7 @@ function ListaProcs({ processamentos }: Props) {
                 </Spinner>
             </div>
             }
+            {showError && error}
             <Table striped bordered responsive>
                 <thead>
                     <tr>
@@ -98,10 +120,10 @@ function ListaProcs({ processamentos }: Props) {
                     {processamentos.map(proc => (
                         <tr key={proc.id}>
                             <td>{proc.id}</td>
-                            <td><Badge pill bg={setColor(proc.status)}>{proc.status}</Badge>{' '}</td>
+                            <td><Badge pill bg={setColor(proc.status)}>{isLoading(proc.status)}</Badge>{' '}</td>
                             <td>{formatDate(proc.createdAt?.toString() as string)}</td>
                             <td>{
-                                proc.status === ('PROCESSANDO' || 'SALVANDO')
+                                proc.status.match('PROCESSANDO')
                                     ? '-'
                                     : formatDate(proc.updatedAt?.toString() as string)
                             }
@@ -109,7 +131,7 @@ function ListaProcs({ processamentos }: Props) {
                             <td>{proc.nomeServico}</td>
                             <td>
                                 <Button
-                                    disabled={proc.status !== 'PROCESSADO'}
+                                    disabled={!proc.status.match('PROCESSADO')}
                                     variant="success"
                                     onClick={() => getResults(proc.id)}>
                                     Baixar
