@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Alert, Button, Form, Modal } from 'react-bootstrap';
+import { Button, Form, Modal } from 'react-bootstrap';
 import { useLocation, useParams } from 'react-router-dom';
 import { alertMsgSwitch } from 'utils/alertMsg';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from 'utils/axios';
 import './styles.css';
 
@@ -11,11 +13,10 @@ function ModalScripts() {
     const { caminho } = location.state as any;
 
     const [show, setShow] = useState(false);
-    const [message, setMessage] = useState<string>('');
     const [scripts, setScripts] = useState<any>();
     const [scriptEscolhidoData, setScriptEscolhidoData] = useState<any>();
     const [scriptEscolhido, setScriptEscolhido] = useState<string>('');
-    const [nomeSaida, setNomeSaida] = useState<string>('saida');
+    const [nomeSaida, setNomeSaida] = useState<string>('resultado_processado');
 
     const [error, setError] = useState<any | null>(null);
     const [showError, setShowError] = useState(false);
@@ -58,30 +59,23 @@ function ModalScripts() {
         })
         formData.append('inputs', JSON.stringify(script));
         formData.append('idImage', params?.idImage!);
-        setNomeSaida('saida');
-        setMessage(msgProcessando);
+        setNomeSaida('resultado_processado');
+        toast.info(msgProcessando, {
+            position: toast.POSITION.BOTTOM_CENTER
+        });
         axiosInstance
             .post(`/processamentos/execution/${scriptEscolhido}`, formData, {
                 headers: { 'content-type': 'multipart/form-data' }
             }).then((res) => {
-                setMessage(msgSucesso);
+                toast.success(msgSucesso, {
+                    position: toast.POSITION.BOTTOM_CENTER
+                });
             })
             .catch((error) => {
-                const code = error?.response?.data?.code;
-                switch (code) {
-                    default:
-                        setMessage(msgErro);
-                        break;
-                }
+                toast.error(msgErro, {
+                    position: toast.POSITION.BOTTOM_CENTER
+                });
             })
-    }
-
-    function corMsg() {
-        if (message === msgSucesso)
-            return 'success';
-        else if (message === msgErro)
-            return 'danger';
-        else return 'warning';
     }
 
     function handleNomeSaida(event: React.ChangeEvent<HTMLInputElement>) {
@@ -98,22 +92,18 @@ function ModalScripts() {
 
     return (
         <header className="header">
-            {message && //msg de estado do processamento
-                <Alert variant={corMsg()} className='alertMsg'>
-                    <span>{message}</span>
-                </Alert>
-            }
+            <ToastContainer />
             <div className="div-botao-novo">
-                <Button onClick={() => { setShow(true); setMessage(''); }}>Novo processamento</Button>
+                <Button onClick={() => { setShow(true); }}>Novo processamento</Button>
             </div>
             <Modal show={show} onHide={() => setShow(false)} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Executar script</Modal.Title>
+                    <Modal.Title>Executar processamento</Modal.Title>
                 </Modal.Header>
                 {showError && error}
                 <Modal.Body>
                     <Form.Group className="mb-3">
-                        <Form.Label>Escolha o script de processamento a ser executado:</Form.Label>
+                        <Form.Label>Escolha o método de processamento a ser executado:</Form.Label>
                         <Form.Select id='select' onChange={event => setScript(event.target.value)}>
                         {scripts && Object.keys(scripts).map(
                                 (item: any) => 
@@ -132,8 +122,8 @@ function ModalScripts() {
                             </Form.Group> : 
                         item.type === 'string' ?
                             <Form.Group className="mb-3" key={item.flag}>
-                                <Form.Label>Nome dos arquivos de saída:</Form.Label>
-                                <Form.Control type="text" onChange={handleNomeSaida} />
+                                <Form.Label>Dê um nome para a imagem processada:</Form.Label>
+                                <Form.Control type="text" onChange={handleNomeSaida} placeholder={'resultado_processado'} />
                             </Form.Group> :
                         item.type === 'static file array' ?
                             <Form.Group className="mb-3" key={item.flag} hidden>
