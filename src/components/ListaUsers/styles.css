@@ -1,0 +1,4 @@
+.div-botoes {
+    display: flex;
+    justify-content: space-between;
+}

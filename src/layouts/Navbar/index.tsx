@@ -22,8 +22,8 @@ function NavigationBar() {
                     <Nav.Link href="/">
                         <p className='link'>Pacientes</p>
                     </Nav.Link>
-                    <Nav.Link href="/">
-                        <p className='link'>Adicionar novo processamento</p>
+                    <Nav.Link href="/admin">
+                        <p className='link'>Painel de admin</p>
                     </Nav.Link>
                     <div className='div-sair'>
                         <div>Entrou como: {context?.user != null ? context?.user.name: 'Carregando'}</div>

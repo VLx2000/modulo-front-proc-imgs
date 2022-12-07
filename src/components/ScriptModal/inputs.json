@@ -1,0 +1,149 @@
+{
+    "string": {
+        "help": "Uma string que deverá ser fornecida pelo usuário para execução do script",
+        "inputs": [
+            {
+                "help": "Flag que será atrelada a esse input quando o serviço for executado",
+                "name": "flag",
+                "label": "Flag",
+                "type": "text"
+            },
+            {
+                "help": "Nome que será utilizado como chave para receber a string digitada pelo usuário",
+                "name": "name",
+                "label": "Nome",
+                "type": "text"
+            }
+        ]
+    },
+    "file": {
+        "help": "Um arquivo que deverá ser fornecido pelo usuário para a execução do script",
+        "inputs": [
+            {
+                "help": "Flag que será atrelada a esse input quando o serviço for executado",
+                "name": "flag",
+                "label": "Flag",
+                "type": "text"
+            },
+            {
+                "help": "Nome do arquivo que o usuário deve enviar para executar o serviço",
+                "name": "filename",
+                "label": "Nome do arquivo",
+                "type": "text"
+            }
+        ]
+    },
+    "static file": {
+        "help": "Um arquivo que será enviado para todas execuções do serviço (não será fornecido pelo usuário, será o mesmo para todas execuções)",
+        "inputs": [
+            {
+                "help": "Flag que será atrelada a esse input quando o serviço for executado",
+                "name": "flag",
+                "label": "Flag",
+                "type": "text"
+            },
+            {
+                "help": "Arquivo que será utilizado na execução do serviço",
+                "name": "filename",
+                "label": "Arquivo estático",
+                "type": "file"
+            }
+        ]
+    },
+    "string array": {
+        "help": "Um conjunto de strings que deverão ser fornecidas pelo usuário para a execução do serviço",
+        "inputs": [
+            {
+                "help": "Flag que será atrelada a esse input quando o serviço for executado",
+                "name": "flag",
+                "label": "Flag",
+                "type": "text"
+            },
+            {
+                "help": "Lista de nomes que serão utilizados como chaves para identificar as strings que o usuário deve submeter",
+                "name": "names",
+                "label": "Nomes",
+                "type": "text array"
+            }
+        ]
+    },
+    "file array": {
+        "help": "Um conjunto de arquivos que deverão ser fornecidos pelo usuário para a execução do serviço",
+        "inputs": [
+            {
+                "help": "Flag que será atrelada a esse input quando o serviço for executado",
+                "name": "flag",
+                "label": "Flag",
+                "type": "text"
+            },
+            {
+                "help": "Lista de nomes de arquivos que o usuário necessitará enviar para a execução do script",
+                "name": "filenames",
+                "label": "Nome dos arquivos",
+                "type": "text array"
+            }
+        ]
+    },
+    "static file array": { 
+        "help": "Um conjunto de arquivos que serão enviados para todas as execuções do serviço (não serão fornecidos pelo usuário, serão os mesmos para todas execuções)",
+        "inputs": [
+            {
+                "help": "Flag que será atrelada a esse input quando o serviço for executado",
+                "name": "flag",
+                "label": "Flag",
+                "type": "text"
+            },
+            {
+                "help": "Conjunto de arquivos que serão enviados para a execução do serviço",
+                "name": "filenames",
+                "label": "Arquivos estáticos",
+                "type": "file array"
+            }
+        ]
+    },
+    "static string": {
+        "help": "Uma string que será enviada para todas execuções do serviço (não será fornecida pelo usuário, será a mesma para todas as execuções)",
+        "inputs": [
+            {
+                "help": "Flag que será atrelada a esse input quando o serviço for executado",
+                "name": "flag",
+                "label": "Flag",
+                "type": "text"
+            },
+            {
+                "help": "Valor da string que será passado para o comando final",
+                "name": "value",
+                "label": "String",
+                "type": "text"
+            }
+        ]
+    },
+    "flag": {
+        "help": "Uma flag que será adicionada à execução caso uma chave seja fornecida",
+        "inputs": [
+            {
+                "help": "Flag que será colocada ao comando final, caso o usuário forneça algo com a chave fornecida no input de nome",
+                "name": "flag",
+                "label": "Flag",
+                "type": "text"
+            },
+            {
+                "help": "Nome que será utilizado como chave para desativar ou ativar a flag",
+                "name": "name",
+                "label": "Nome",
+                "type": "text"
+            }
+        ]
+    },
+    "static flag": { 
+        "help": "Uma flag que será adicionada à todas execuções do serviço",
+        "inputs": [
+            {
+                "help": "Flag que será adicionada no comando de execução final",
+                "name": "flag",
+                "label": "Flag",
+                "type": "text"
+            }
+        ]
+    }
+}

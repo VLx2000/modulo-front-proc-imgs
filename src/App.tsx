@@ -14,6 +14,9 @@ import {
 import { Layout } from "layouts";
 import AuthProvider, { AuthContext } from "./contexts/auth";
 import { useContext } from "react";
+import Scripts from "pages/Admin/Scripts";
+import Admin from "pages/Admin";
+import Dashboard from "pages/Admin/Dashboard";
 
 // uso de react router dom para mudança de pags
 function App() {
@@ -88,6 +91,27 @@ function App() {
                 </Private>
               }
             />
+            <Route 
+              path="/admin" 
+              element={
+                <Private>
+                  <Admin />
+                </Private>
+              } />
+            <Route 
+              path="/admin/scripts" 
+              element={
+                <Private>
+                  <Scripts />
+                </Private>
+              } />
+            <Route 
+              path="/admin/dashboard" 
+              element={
+                <Private>
+                  <Dashboard />
+                </Private>
+              } />
           </Route>
         </Routes>
       </AuthProvider>
