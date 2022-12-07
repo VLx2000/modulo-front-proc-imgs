@@ -1,6 +1,6 @@
 import { ListaUsers, Voltar } from "components";
 import { useEffect, useState } from "react";
-import { Container, FormControl, Spinner } from "react-bootstrap";
+import { Button, ButtonGroup, Container, FormControl, Spinner } from "react-bootstrap";
 import { alertMsgSwitch } from "utils/alertMsg";
 import axiosInstance from "utils/axios";
 
@@ -28,6 +28,7 @@ const teste = [
 const Dashboard = () => {
 
     const [loading, setLoading] = useState<boolean>(false);
+    const [currentPage, setCurrentPage] = useState<"all" | "enableds" | "disableds">("all");
 
     const [error, setError] = useState<any | null>(null);
     const [showError, setShowError] = useState(false);
@@ -36,7 +37,7 @@ const Dashboard = () => {
     const [allUsers, setAllUsers] = useState(teste);
 
 
-    /* useEffect(() => {
+    useEffect(() => {
         setLoading(true);
         axiosInstance
             .get('/user/')
@@ -50,11 +51,12 @@ const Dashboard = () => {
                 setShowError(true);
             })
             .finally(() => setLoading(false));
-    }, []); */
+    }, []);
 
 
     function handleFilter(event: React.ChangeEvent<HTMLInputElement>) {
         const filter = event.target.value;
+        setCurrentPage("all");
         if (filter === '') {
             setUsers(allUsers);
         }
@@ -74,7 +76,6 @@ const Dashboard = () => {
                 </Spinner>
             </div>
             }
-            {showError && error}
             <h3 className="titulo-pag">Usuários do sistema</h3>
             <header className="header">
                 <FormControl
@@ -84,9 +85,44 @@ const Dashboard = () => {
                     aria-label="Search"
                     onChange={handleFilter}
                 />
-            </header>
+                <ButtonGroup aria-label="Basic example" className="div-botao-novo">
+                    <Button
+                        variant='outline-secondary'
+                        onClick={() => {
+                            setCurrentPage("all");
+                            setUsers(allUsers);
+                        }}
+                        active={currentPage === "all"}
+                    >
+                        Todos
+                    </Button>
+                    <Button
+                        variant='outline-primary'
+                        onClick={() => {
+                            setCurrentPage("enableds");
+                            setUsers(allUsers.filter(user =>
+                                user.desativado === false));
+                        }}
+                        active={currentPage === "enableds"}
+                    >
+                        Ativos
+                    </Button>
+                    <Button
+                        variant='outline-danger'
+                        onClick={() => {
+                            setCurrentPage("disableds");
+                            setUsers(allUsers.filter(user =>
+                                user.desativado === true));
+                        }}
+                        active={currentPage === "disableds"}
+                    >
+                        Desativados
+                    </Button>
+                </ButtonGroup>
+            </header >
+            {showError && error}
             {!loading && <ListaUsers usuarios={users} />}
-        </Container>);
+        </Container >);
 };
 
 export default Dashboard;

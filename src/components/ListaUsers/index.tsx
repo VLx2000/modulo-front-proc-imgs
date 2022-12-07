@@ -42,8 +42,8 @@ function ListaUsers({ usuarios }: Props) {
                 </thead>
                 <tbody>
                     {usuarios.map(user => (
-                        <tr key={user.id} style={{opacity: user.desativado ? '0.5' : '1'}}>
-                            <td>{user.id}</td>                      
+                        <tr key={user.id}>
+                            <td style={{opacity: user.desativado ? '0.5' : '1'}}>{user.id}</td>                      
                             <td>{user.name}</td>
                             <td>{user.email}</td>
                             <td>

@@ -15,6 +15,7 @@ import axiosInstance from 'utils/axios';
 import { ButtonGroup } from 'react-bootstrap';
 import './styles.css'
 import { Voltar } from 'components';
+import { alertMsgSwitch } from 'utils/alertMsg';
 
 function createNullScriptInfo() {
   return {
@@ -47,6 +48,8 @@ const Scripts: React.FC = () => {
   const [showEnableModal, setShowEnableModal] = useState(false)
   const [enableScriptName, setEnableScriptName] = useState<string>("")
   const [filter, setFilter] = useState("")
+  const [error, setError] = useState<any | null>(null);
+  const [showError, setShowError] = useState(false);
   const getUpdateScriptName = () => (updateScriptName)
   const setUpdateScriptName = (newUpdateScriptName: string) => { updateScriptName = newUpdateScriptName }
 
@@ -56,6 +59,11 @@ const Scripts: React.FC = () => {
         enabledScripts = scriptsInfos.data
         setScripts(scriptsInfos.data)
       })
+      .catch((error) => {
+        const code = error?.response?.status;
+        setError(alertMsgSwitch(code, 'Erro ao obter users', setError));
+        setShowError(true);
+      })
   }, [])
 
   useEffect(() => {
@@ -63,12 +71,18 @@ const Scripts: React.FC = () => {
       .then((scriptsInfos) => {
         disabledScripts = scriptsInfos.data
       })
+      .catch((error) => {
+        const code = error?.response?.status;
+        setError(alertMsgSwitch(code, 'Erro ao obter users', setError));
+        setShowError(true);
+      })
   }, [])
 
   return (
     <main>
       <Container fluid="md">
         <Voltar caminho={`/admin`} />
+        <h3 className="titulo-pag">Serviços</h3>
         <Row className="justify-content-center mt-5 mb-5">
           <ButtonGroup aria-label="Basic example">
             <Button
@@ -125,6 +139,7 @@ const Scripts: React.FC = () => {
             </div>
           </Col>
         </Row>
+        {showError && error}
       </Container>
 
       <ScriptList

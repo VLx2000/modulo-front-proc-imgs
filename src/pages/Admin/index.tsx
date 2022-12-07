@@ -11,7 +11,7 @@ const Admin = () => {
                     <Link to={"/admin/scripts"}>
                         <div className="admin-option">
                             <BsFillTerminalFill size={100} />
-                            <div>Gerenciar scripts</div>
+                            <div>Gerenciar serviços</div>
                         </div>
                     </Link>
                 </Col>
