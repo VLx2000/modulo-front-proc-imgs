@@ -35,7 +35,7 @@ export default function DeleteModal({scripts, enabledScripts, disabledScripts, s
                 <Button 
                     variant="primary"
                     onClick={() => { // Colocar um loading ?
-                        axiosInstance.put(`/processamentos/scripts/enable/${scriptName}`)
+                        axiosInstance.put(`/processamentos/admin/scripts/enable/${scriptName}`)
                             .then((response) => {
                                 console.log(response)
                                 enabledScripts[scriptName] = {...disabledScripts[scriptName]}

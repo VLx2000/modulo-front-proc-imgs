@@ -33,7 +33,7 @@ export default function DeleteModal({scripts, setScripts, showDeleteModal, setSh
                 <Button 
                     variant="danger"
                     onClick={() => { // Colocar um loading ?
-                        axiosInstance.delete(`/processamentos/scripts/${scriptName}`)
+                        axiosInstance.delete(`/processamentos/admin/scripts/${scriptName}`)
                             .then((response) => {
                                 console.log(response.data)
                                 delete scripts[scriptName]

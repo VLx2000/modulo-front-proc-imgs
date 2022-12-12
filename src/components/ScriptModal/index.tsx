@@ -102,7 +102,7 @@ export default function ScriptModal({setShowModal, showModal, formDisabled, moda
     
         if (currentScriptName === '') {
             // Adicionando um novo script
-            axiosInstance.post('/processamentos/scripts', formData, {
+            axiosInstance.post('/processamentos/admin/scripts', formData, {
                 onUploadProgress: (e) => handleProgress(e)
             })
                 .then((response) => (handleCreateSuccess(response)))
@@ -110,7 +110,7 @@ export default function ScriptModal({setShowModal, showModal, formDisabled, moda
         }
         else {
             // Atualizando um script
-            axiosInstance.put(`/processamentos/scripts/${currentScriptName}`, formData, {
+            axiosInstance.put(`/processamentos/admin/scripts/${currentScriptName}`, formData, {
                 onUploadProgress: (e) => handleProgress(e)
             })
                 .then((response) => (handleUpdateSuccess(currentScriptName, response)))

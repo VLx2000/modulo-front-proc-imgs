@@ -20,14 +20,27 @@ import Dashboard from "pages/Admin/Dashboard";
 
 // uso de react router dom para mudança de pags
 function App() {
-  const Private = ({ children }: any) => {
+  const PrivateUser = ({ children }: any) => {
     const context = useContext(AuthContext);
 
     if (context?.loading) {
       return <div>Carregando...</div>;
     }
 
-    if (!context?.authenticated) {
+    if (!context?.authenticated || context?.user?.type !== 'user') {
+      return <Navigate to="/login" />;
+    }
+    return children;
+  };
+
+  const PrivateAdmin = ({ children }: any) => {
+    const context = useContext(AuthContext);
+
+    if (context?.loading) {
+      return <div>Carregando...</div>;
+    }
+
+    if (!context?.authenticated || context?.user?.type !== 'admin') {
       return <Navigate to="/login" />;
     }
     return children;
@@ -46,71 +59,71 @@ function App() {
             <Route
               index
               element={
-                <Private>
+                <PrivateUser>
                   <Pacientes />
-                </Private>
+                </PrivateUser>
               }
             />
             <Route
               path="/imagens/:idPaciente"
               element={
-                <Private>
+                <PrivateUser>
                   <ListaImagens />
-                </Private>
+                </PrivateUser>
               }
             />
             <Route
               path="/upload/:idPaciente"
               element={
-                <Private>
+                <PrivateUser>
                   <UploadForm />
-                </Private>
+                </PrivateUser>
               }
             />
             <Route
               path="/editar/:idPaciente"
               element={
-                <Private>
+                <PrivateUser>
                   <EditarPaciente />
-                </Private>
+                </PrivateUser>
               }
             />
             <Route
               path="/adicionar"
               element={
-                <Private>
+                <PrivateUser>
                   <NovoPaciente />
-                </Private>
+                </PrivateUser>
               }
             />
             <Route
               path="/imagens/:idPaciente/processamentos/:idImage"
               element={
-                <Private>
+                <PrivateUser>
                   <Processamentos />
-                </Private>
+                </PrivateUser>
               }
             />
-            <Route 
+            <Route
               path="/admin" 
               element={
-                <Private>
+                <PrivateAdmin>
                   <Admin />
-                </Private>
+                </PrivateAdmin>
               } />
             <Route 
               path="/admin/scripts" 
               element={
-                <Private>
+                <PrivateAdmin>
                   <Scripts />
-                </Private>
+                </PrivateAdmin>
               } />
             <Route 
               path="/admin/dashboard" 
               element={
-                <Private>
+                <PrivateAdmin>
                   <Dashboard />
-                </Private>
+                </PrivateAdmin>
               } />
           </Route>
         </Routes>

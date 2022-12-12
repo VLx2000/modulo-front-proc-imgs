@@ -4,27 +4,6 @@ import { Button, ButtonGroup, Container, FormControl, Spinner } from "react-boot
 import { alertMsgSwitch } from "utils/alertMsg";
 import axiosInstance from "utils/axios";
 
-const teste = [
-    {
-        name: 'teste1',
-        id: 1,
-        email: 'teste@gmail.com',
-        desativado: false
-    },
-    {
-        name: 'teste2',
-        id: 2,
-        email: 'teste@gmail.com',
-        desativado: false
-    },
-    {
-        name: 'teste3',
-        id: 3,
-        email: 'teste@gmail.com',
-        desativado: true
-    },
-];
-
 const Dashboard = () => {
 
     const [loading, setLoading] = useState<boolean>(false);
@@ -33,14 +12,14 @@ const Dashboard = () => {
     const [error, setError] = useState<any | null>(null);
     const [showError, setShowError] = useState(false);
 
-    const [users, setUsers] = useState(teste);
-    const [allUsers, setAllUsers] = useState(teste);
+    const [users, setUsers] = useState([]);
+    const [allUsers, setAllUsers] = useState([]);
 
 
     useEffect(() => {
         setLoading(true);
         axiosInstance
-            .get('/user/')
+            .get('/users/getUsers')
             .then((res) => {
                 setUsers(res.data);
                 setAllUsers(res.data);
@@ -101,7 +80,7 @@ const Dashboard = () => {
                         onClick={() => {
                             setCurrentPage("enableds");
                             setUsers(allUsers.filter(user =>
-                                user.desativado === false));
+                                user.hidden === false));
                         }}
                         active={currentPage === "enableds"}
                     >
@@ -112,7 +91,7 @@ const Dashboard = () => {
                         onClick={() => {
                             setCurrentPage("disableds");
                             setUsers(allUsers.filter(user =>
-                                user.desativado === true));
+                                user.hidden === true));
                         }}
                         active={currentPage === "disableds"}
                     >

@@ -57,9 +57,13 @@ const AuthProvider = ({ children }: any) => {
                     Authorization: `Bearer ${token}`
                 } as CommonHeaderProperties
 
-                setUser({ id: loggedUser.id, name: loggedUser.name });
+                setUser({ id: loggedUser.id, name: loggedUser.name, type: loggedUser.type });
                 setError('');
-                navigate('/');
+                if (loggedUser.type === 'admin'){
+                    navigate('/admin');
+                } else {
+                    navigate('/');
+                }
             })
             .catch((err) => {
                 setLoading(false);

@@ -61,7 +61,7 @@ const Scripts: React.FC = () => {
       })
       .catch((error) => {
         const code = error?.response?.status;
-        setError(alertMsgSwitch(code, 'Erro ao obter users', setError));
+        setError(alertMsgSwitch(code, 'Erro ao obter serviços', setError));
         setShowError(true);
       })
   }, [])
@@ -73,7 +73,7 @@ const Scripts: React.FC = () => {
       })
       .catch((error) => {
         const code = error?.response?.status;
-        setError(alertMsgSwitch(code, 'Erro ao obter users', setError));
+        setError(alertMsgSwitch(code, 'Erro ao obter serviços', setError));
         setShowError(true);
       })
   }, [])

@@ -18,7 +18,8 @@ function ListaUsers({ usuarios }: Props) {
         axiosInstance
             .put('/users/status/' + idUser)
             .then((res) => {
-                //console.log(res.headers)
+                document.location.reload();
+                //console.log(res.data)
             })
             .catch((error) => {
                 const code = error?.response?.status;
@@ -37,21 +38,23 @@ function ListaUsers({ usuarios }: Props) {
                         <th>#id</th>
                         <th>Nome</th>
                         <th>Email</th>
+                        <th>Tipo</th>
                         <th>Ação</th>
                     </tr>
                 </thead>
                 <tbody>
                     {usuarios.map(user => (
                         <tr key={user.id}>
-                            <td style={{opacity: user.desativado ? '0.5' : '1'}}>{user.id}</td>                      
-                            <td>{user.name}</td>
-                            <td>{user.email}</td>
+                            <td style={{opacity: user.hidden ? '0.5' : '1'}}>{user.id}</td>                      
+                            <td style={{opacity: user.hidden ? '0.5' : '1'}}>{user.name}</td>
+                            <td style={{opacity: user.hidden ? '0.5' : '1'}}>{user.email}</td>
+                            <td style={{opacity: user.hidden ? '0.5' : '1'}}>{user.type}</td>
                             <td>
                                 <Button
                                     style={{opacity: '1 !important'}}
-                                    variant={user.desativado ? 'success' : 'danger'}
+                                    variant={user.hidden ? 'success' : 'danger'}
                                     onClick={() => mudarStatus(user.id)}>
-                                    {user.desativado ? 'Ativar' : 'Desativar'}
+                                    {user.hidden ? 'Ativar' : 'Desativar'}
                                 </Button>
                             </td>
                         </tr>
