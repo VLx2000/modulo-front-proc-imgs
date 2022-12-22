@@ -27,7 +27,7 @@ function ModalScripts() {
 
     useEffect(() => {
         axiosInstance
-            .get('/processamentos/scripts')
+            .get('/processamentos/scripts/enabledScripts/')
             .then((res) => {
                 setScripts(res.data);
                 setScriptEscolhidoData(Object.values(res.data)[0]);

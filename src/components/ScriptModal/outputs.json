@@ -1,0 +1,24 @@
+{
+    "file": {
+        "help": "Arquivo de saida do serviço",
+        "inputs": [
+            {
+                "help": "Nome do arquivo que será gerado pelo serviço. Pode usar referência de um input utilizando $nome_input",
+                "name": "filename",
+                "label": "Nome arquivo",
+                "type": "text"
+            }
+        ]
+    },
+    "script print": {
+        "help": "Todo print que for realizado pelo serviço será armazenado em um arquivo",
+        "inputs": [
+            {
+                "help": "Nome do arquivo que armazenará os prints do arquivo",
+                "name": "filename",
+                "label": "Nome arquivo",
+                "type": "text"
+            }
+        ]
+    }
+}

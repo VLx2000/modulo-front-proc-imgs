@@ -1,4 +1,4 @@
-import { Nav, Navbar, Container, Button } from 'react-bootstrap';
+import { Navbar, Container, Button } from 'react-bootstrap';
 import { AuthContext } from 'contexts/auth';
 import { useContext } from 'react';
 import './styles.css';
@@ -11,20 +11,16 @@ function NavigationBar() {
         context?.logout!();
     }
 
+    const home = context?.user?.type === 'admin' ? '/admin' : '/';
+
     return (
         <Navbar collapseOnSelect bg="dark" variant='dark' expand="lg" sticky="top">
             <Container >
-                <Navbar.Brand href='/' title="Processamento de imagens">
-                    <h1>Proc de imgs</h1>
+                <Navbar.Brand href={home} title="Processamento de imagens">
+                    <h1>Processamento de NIfTI</h1>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav.Link href="/">
-                        <p className='link'>Pacientes</p>
-                    </Nav.Link>
-                    <Nav.Link href="/">
-                        <p className='link'>Adicionar novo processamento</p>
-                    </Nav.Link>
                     <div className='div-sair'>
                         <div>Entrou como: {context?.user != null ? context?.user.name: 'Carregando'}</div>
                         <Button variant='outline-danger' onClick={handleLogout}> Sair</Button>
