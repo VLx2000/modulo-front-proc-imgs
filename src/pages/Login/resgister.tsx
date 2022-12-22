@@ -36,6 +36,11 @@ function Register() {
         }
     };
 
+    const termosUso = () => 
+        <>
+            <span>Li e concordo com os </span><a href='http://google.com'>Termos de Uso</a>
+        </>
+
     useEffect(() => {
         if (password && passwordConfirmation !== password) setMatch(false)
         else setMatch(true)
@@ -85,6 +90,14 @@ function Register() {
                         <Form.Control.Feedback type="invalid">
                             As senhas não conferem
                         </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group controlId="criar" className="mb-3 div-botao-entrar">
+                        <Form.Check
+                            type={'checkbox'}
+                            id={`default-checkbox`}
+                            label={termosUso()}
+                            required
+                        />
                     </Form.Group>
                     <Form.Group controlId="criar" className="mb-3 div-botao-entrar">
                         <Button type="submit" disabled={!match}>Criar conta</Button>
