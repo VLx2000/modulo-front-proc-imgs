@@ -4,7 +4,6 @@ import { Link, useParams } from "react-router-dom";
 import { Image } from "types/images";
 import { alertMsgSwitch } from "utils/alertMsg";
 import axiosInstance from "utils/axios";
-import './styles.css';
 
 type Props = {
     images: Image[];
@@ -86,7 +85,7 @@ function ListaImgs({ images, arquivado }: Props) {
                                     onChange={(e) => atualizarAquisicao(e.target.value, image.id)} />
                             </td>
                             <td>{image.tipo}</td>
-                            <td className="div-botoes">
+                            <td className="div-botoes-lista-imgs">
                                 <div>
                                     <Button onClick={() => changeFileVisibility(image.id)} variant="outline-secondary">
                                         {image.arquivado ? 'Desarquivar' : 'Arquivar'}</Button>

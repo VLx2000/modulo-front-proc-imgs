@@ -4,7 +4,6 @@ import { Badge, Button, Spinner, Table } from "react-bootstrap";
 import { Processamento } from "types/processamentos";
 import { alertMsgSwitch } from "utils/alertMsg";
 import axiosInstance from "utils/axios";
-import './styles.css';
 
 type Props = {
     processamentos: Processamento[];
@@ -105,7 +104,7 @@ function ListaProcs({ processamentos }: Props) {
             </div>
             }
             {showError && error}
-            <div className='divMsg'><p>{processamentos?.length ?? 0} processamento(s)</p></div>
+            <div className='tam-lista'><p>{processamentos?.length ?? 0} processamento(s)</p></div>
             <Table striped bordered responsive>
                 <thead>
                     <tr>

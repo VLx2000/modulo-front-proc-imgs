@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Button, Container, Form, Spinner } from "react-bootstrap";
+import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "utils/axios";
 import { Voltar } from "components";
 import { Paciente } from "types/pacientes";
 import { alertMsgSwitch } from "utils/alertMsg";
+import HelpIcon from "components/HelpIcon";
 
 // component q exibe form para editar paciente
 function EditarPaciente() {
@@ -75,43 +76,49 @@ function EditarPaciente() {
         <Container>
             <Voltar caminho={`/`} />
             {carregado ?
-                <Container className="login-container">
-                    <Form onSubmit={submitHandler}>
-                        <h3 className="titulo-pag">Editar paciente {paciente?.id}</h3>
-                        {showError && error}
-                        <Form.Group controlId="apelido" className="mb-3">
-                            <Form.Label column sm="6">Apelido</Form.Label>
-                            <Form.Control
-                                defaultValue={apelido}
-                                onChange={(e) => setApelido(e.target.value as string)}
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="sexo" className="mb-3">
-                            <Form.Label column sm="6">Sexo</Form.Label>
-                            <Form.Select
-                                defaultValue={sexo}
-                                required
-                                onChange={(e) => setSexo(e.target.value as string)}>
-                                <option>Não declarado</option>
-                                <option>Masculino</option>
-                                <option>Feminino</option>
-                            </Form.Select>
-                        </Form.Group>
-                        <Form.Group controlId="data" className="mb-3">
-                            <Form.Label column sm="6">Data de nascimento</Form.Label>
-                            <Form.Control
-                                required
-                                type="date"
-                                defaultValue={nascimento?.toString().slice(0, 10)}
-                                onChange={(e) => setNascimento(e.target.value as unknown as Date)}
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="criar" className="mb-3 div-botao-entrar">
-                            <Button variant="secondary" type="submit">Salvar</Button>
-                            <span> </span>
-                            <Button variant="outline-danger" onClick={deletar}>Apagar paciente</Button>
-                        </Form.Group>
-                    </Form>
+                <Container className="mt-5">
+                    <Row className="justify-content-md-center">
+                        <Col xs lg="5">
+                            <Form onSubmit={submitHandler}>
+                                <h3 className="titulo-pag">Editar paciente {paciente?.id}</h3>
+                                {showError && error}
+                                <Form.Group controlId="apelido" className="mb-3">
+                                    <Form.Label column sm="6">Apelido (identificador) <HelpIcon
+                                        text='Campo opcional para adicionar um nome/apelido para fácil identificação do paciente em questão'
+                                    /></Form.Label>
+                                    <Form.Control
+                                        defaultValue={apelido}
+                                        onChange={(e) => setApelido(e.target.value as string)}
+                                    />
+                                </Form.Group>
+                                <Form.Group controlId="sexo" className="mb-3">
+                                    <Form.Label column sm="6">Sexo</Form.Label>
+                                    <Form.Select
+                                        defaultValue={sexo}
+                                        required
+                                        onChange={(e) => setSexo(e.target.value as string)}>
+                                        <option>Não declarado</option>
+                                        <option>Masculino</option>
+                                        <option>Feminino</option>
+                                    </Form.Select>
+                                </Form.Group>
+                                <Form.Group controlId="data" className="mb-3">
+                                    <Form.Label column sm="6">Data de nascimento</Form.Label>
+                                    <Form.Control
+                                        required
+                                        type="date"
+                                        defaultValue={nascimento?.toString().slice(0, 10)}
+                                        onChange={(e) => setNascimento(e.target.value as unknown as Date)}
+                                    />
+                                </Form.Group>
+                                <Form.Group controlId="criar" className="mb-3 div-botao">
+                                    <Button variant="secondary" type="submit">Salvar</Button>
+                                    <span> </span>
+                                    <Button variant="outline-danger" onClick={deletar}>Apagar paciente</Button>
+                                </Form.Group>
+                            </Form>
+                        </Col>
+                    </Row>
                 </Container>
                 : <div className="d-flex justify-content-center">
                     <Spinner animation="border" role="status">

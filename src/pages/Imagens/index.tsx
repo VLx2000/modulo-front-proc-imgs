@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Button, FormControl, Tabs, Tab, Spinner } from "react-bootstrap";
+import { Container, Button, FormControl, Tabs, Tab, Spinner, Row, Col } from "react-bootstrap";
 import { Image } from 'types/images';
 import { ListaImgs, Voltar } from "components";
 import { useParams, Link } from 'react-router-dom';
@@ -50,22 +50,26 @@ function ListaImagens() {
         <Container className="images-container">
             <Voltar caminho={'/'} />
             <h3 className="titulo-pag">Imagens do paciente {params.idPaciente}</h3>
-            <header className="header">
-                <FormControl
-                    type="search"
-                    placeholder="filtrar imagem por id"
-                    className="me-2"
-                    aria-label="Search"
-                    onChange={handleFilter}
-                />
-                {/* Ir para formulario de upload de imagens */}
-                <div className="div-botao-novo">
-                    <Link to={`/upload/${params.idPaciente}`}>
-                        <Button>Fazer upload de nova imagem</Button>
-                    </Link>
-                </div>
-            </header>
             {showError && error}
+            <header className="header mt-5 mb-5">
+                <Row>
+                    <Col sm={8}>
+                        <FormControl
+                            type="search"
+                            placeholder="filtrar imagem por id"
+                            className="me-2"
+                            aria-label="Search"
+                            onChange={handleFilter}
+                        />
+                    </Col>
+                    <Col sm={4} className="div-botao-add-novo">
+                        {/* Ir para formulario de upload de imagens */}
+                        <Link to={`/upload/${params.idPaciente}`}>
+                            <Button>Fazer upload de nova imagem</Button>
+                        </Link>
+                    </Col>
+                </Row>
+            </header>
             {carregado ?
                 <Tabs defaultActiveKey="principais" id="tab-arquivo">
                     <Tab eventKey="principais" title={`Minhas imagens (${images?.filter(img => !img.arquivado).length ?? 0})`}>

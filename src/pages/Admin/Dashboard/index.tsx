@@ -1,6 +1,6 @@
 import { ListaUsers, Voltar } from "components";
 import { useEffect, useState } from "react";
-import { Button, ButtonGroup, Container, FormControl, Spinner } from "react-bootstrap";
+import { Button, ButtonGroup, Col, Container, FormControl, Row, Spinner } from "react-bootstrap";
 import { alertMsgSwitch } from "utils/alertMsg";
 import axiosInstance from "utils/axios";
 
@@ -56,48 +56,54 @@ const Dashboard = () => {
             </div>
             }
             <h3 className="titulo-pag">Usuários do sistema</h3>
-            <header className="header">
-                <FormControl
-                    type="search"
-                    placeholder="filtrar user por id"
-                    className="me-2"
-                    aria-label="Search"
-                    onChange={handleFilter}
-                />
-                <ButtonGroup aria-label="Basic example" className="div-botao-novo">
-                    <Button
-                        variant='outline-secondary'
-                        onClick={() => {
-                            setCurrentPage("all");
-                            setUsers(allUsers);
-                        }}
-                        active={currentPage === "all"}
-                    >
-                        Todos
-                    </Button>
-                    <Button
-                        variant='outline-primary'
-                        onClick={() => {
-                            setCurrentPage("enableds");
-                            setUsers(allUsers.filter(user =>
-                                user.hidden === false));
-                        }}
-                        active={currentPage === "enableds"}
-                    >
-                        Ativos
-                    </Button>
-                    <Button
-                        variant='outline-danger'
-                        onClick={() => {
-                            setCurrentPage("disableds");
-                            setUsers(allUsers.filter(user =>
-                                user.hidden === true));
-                        }}
-                        active={currentPage === "disableds"}
-                    >
-                        Desativados
-                    </Button>
-                </ButtonGroup>
+            <header className="header mt-5 mb-5">
+                <Row>
+                    <Col sm={6}>
+                        <FormControl
+                            type="search"
+                            placeholder="filtrar user por id"
+                            className="me-2"
+                            aria-label="Search"
+                            onChange={handleFilter}
+                        />
+                    </Col>
+                    <Col sm={6}>
+                        <ButtonGroup className="div-botao-add-novo">
+                            <Button
+                                variant='outline-secondary'
+                                onClick={() => {
+                                    setCurrentPage("all");
+                                    setUsers(allUsers);
+                                }}
+                                active={currentPage === "all"}
+                            >
+                                Todos
+                            </Button>
+                            <Button
+                                variant='outline-primary'
+                                onClick={() => {
+                                    setCurrentPage("enableds");
+                                    setUsers(allUsers.filter(user =>
+                                        user.hidden === false));
+                                }}
+                                active={currentPage === "enableds"}
+                            >
+                                Ativos
+                            </Button>
+                            <Button
+                                variant='outline-danger'
+                                onClick={() => {
+                                    setCurrentPage("disableds");
+                                    setUsers(allUsers.filter(user =>
+                                        user.hidden === true));
+                                }}
+                                active={currentPage === "disableds"}
+                            >
+                                Desativados
+                            </Button>
+                        </ButtonGroup>
+                    </Col>
+                </Row>
             </header >
             {showError && error}
             {!loading && <ListaUsers usuarios={users} />}

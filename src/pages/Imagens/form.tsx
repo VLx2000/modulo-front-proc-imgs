@@ -3,7 +3,6 @@ import { Alert, Button, Container, Form, ProgressBar, Row, Col } from "react-boo
 import { useParams, Link } from "react-router-dom";
 import axiosInstance from "utils/axios";
 import { Voltar } from "components";
-import './styles.css';
 
 // component q exibe form para upload
 function UploadForm() {

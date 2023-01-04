@@ -29,7 +29,7 @@ html {
 
 .div-sair {
     color: #f2f2f2;
-    width: -webkit-fill-available;
+    width: 100%;
     justify-content: flex-end;
     display: flex;
 }

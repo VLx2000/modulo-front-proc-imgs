@@ -1,7 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { BsFillPersonLinesFill, BsFillTerminalFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import './styles.css';
 
 const Admin = () => {
     return (

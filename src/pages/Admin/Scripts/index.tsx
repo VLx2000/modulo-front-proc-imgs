@@ -13,7 +13,6 @@ import EnableModal from "../../../components/EnableModal"
 import DisableModal from "../../../components/DisableModal"
 import axiosInstance from 'utils/axios';
 import { ButtonGroup } from 'react-bootstrap';
-import './styles.css'
 import { Voltar } from 'components';
 import { alertMsgSwitch } from 'utils/alertMsg';
 

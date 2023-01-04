@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "utils/axios";
 import { Voltar } from "components";
 import { alertMsgSwitch } from "utils/alertMsg";
+import HelpIcon from "components/HelpIcon";
 
 // component q exibe form para criar novo paciente
 function NovoPaciente() {
@@ -38,39 +39,45 @@ function NovoPaciente() {
     return (
         <Container>
             <Voltar caminho={`/`} />
-            <Container className="login-container">
-                <Form onSubmit={submitHandler}>
-                    <h3 className="titulo-pag">Adicionar novo paciente</h3>
-                    {showError && error}
-                    <Form.Group controlId="newNome" className="mb-3">
-                        <Form.Label column sm="6">Apelido</Form.Label>
-                        <Form.Control
-                            onChange={(e) => setApelido(e.target.value as string)}
-                            />
-                    </Form.Group>
-                    <Form.Group controlId="newEmail" className="mb-3">
-                        <Form.Label column sm="6">Sexo</Form.Label>
-                        <Form.Select
-                            defaultValue="Não declarado"
-                            required
-                            onChange={(e) => setSexo(e.target.value as string)}>
-                            <option>Não declarado</option>
-                            <option>Masculino</option>
-                            <option>Feminino</option>
-                        </Form.Select>
-                    </Form.Group>
-                    <Form.Group controlId="newSenha" className="mb-3">
-                        <Form.Label column sm="6">Data de nascimento</Form.Label>
-                        <Form.Control
-                            required
-                            type="date"
-                            onChange={(e) => setNascimento(e.target.value as string)}
-                            />
-                    </Form.Group>
-                    <Form.Group controlId="criar" className="mb-3 div-botao-entrar">
-                        <Button type="submit">Criar paciente</Button>
-                    </Form.Group>
-                </Form>
+            <Container className="mt-5">
+                <Row className="justify-content-md-center">
+                    <Col xs lg="5">
+                        <Form onSubmit={submitHandler}>
+                            <h3 className="titulo-pag">Adicionar novo paciente</h3>
+                            {showError && error}
+                            <Form.Group controlId="newNome" className="mb-3">
+                                <Form.Label column sm="6">Apelido (identificador) <HelpIcon
+                                    text='Campo opcional para adicionar um nome/apelido para fácil identificação do paciente em questão'
+                                /></Form.Label>
+                                <Form.Control
+                                    onChange={(e) => setApelido(e.target.value as string)}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="newEmail" className="mb-3">
+                                <Form.Label column sm="6">Sexo</Form.Label>
+                                <Form.Select
+                                    defaultValue="Não declarado"
+                                    required
+                                    onChange={(e) => setSexo(e.target.value as string)}>
+                                    <option>Não declarado</option>
+                                    <option>Masculino</option>
+                                    <option>Feminino</option>
+                                </Form.Select>
+                            </Form.Group>
+                            <Form.Group controlId="newSenha" className="mb-3">
+                                <Form.Label column sm="6">Data de nascimento</Form.Label>
+                                <Form.Control
+                                    required
+                                    type="date"
+                                    onChange={(e) => setNascimento(e.target.value as string)}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="criar" className="mb-3 div-botao">
+                                <Button type="submit">Criar paciente</Button>
+                            </Form.Group>
+                        </Form>
+                    </Col>
+                </Row>
             </Container>
         </Container>
     );

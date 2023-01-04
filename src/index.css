@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  background-color: #f7f7f7 !important;
 }
 
 code {
@@ -12,31 +14,48 @@ code {
     monospace;
 }
 
-body {
+#root {
   min-height: 100vh;
-  background-color: #f7f7f7 !important;
 }
 
 .titulo-pag {
   text-align: center;
 }
 
-.header {
-  display: flex;
-  margin-block: 2em;
+.login-header {
+  padding: 8px;
+  background-color: rgba(226, 226, 226, 0.397);
 }
 
-.header form {
+.vh-90{
+  min-height:90vh;
+}
+
+.container form {
+  background-color: rgb(255, 255, 255);
+  padding: 30px;
+  border-radius: 16px;
+}
+
+/* Buttons section */
+.div-botao {
+  text-align: center;
+}
+
+.div-botao-add-novo {
   width: 100%;
 }
 
-.div-botao-novo {
-  display: flex;
-  justify-content: flex-end;
+.div-botao-add-novo a {
   width: 100%;
 }
 
-.divMsg {
+.div-botao-add-novo a button{
+  width: inherit;
+}
+
+/* Listagens section */
+.tam-lista {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,18 +66,85 @@ body {
   background-color: white;
 }
 
-.opcao-remover {
-  color: red !important;
+.div-botoes-lista-imgs {
+  display: flex;
+  justify-content: space-between;
 }
 
-td a .btn {
-  margin-inline: 10px;
+/* Pacientes section */
+.card-paciente {
+  padding: 20px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.082);
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
 }
 
-.header .form-control {
-  width: auto !important;
+.div-botoes-paciente {
+  display: grid;
+  align-items: center;
+  justify-content: end;
 }
 
-/* form {
-  width: 400px;
-} */
+.div-botoes-paciente button {
+  width: -webkit-fill-available;
+}
+
+/* Admin section */
+.admin-option {
+  display: grid;
+  justify-items: center;
+  background-color: rgba(77, 77, 77, 0.397);
+  border-radius: 20px;
+  margin: 20px;
+  padding: 20px;
+}
+
+.tooltip-arrow {
+  display: none !important;
+}
+
+/* Image form section */
+.upload-form {
+  margin-block: 5em;
+}
+
+.upload-button {
+  width: 100%;
+}
+
+.recarregar {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.progress-data {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+}
+
+.progress-data .progress {
+  height: auto;
+  font-size: inherit;
+  border-radius: 0.25em 0 0 0.25em;
+}
+
+.progress-data button {
+  border-radius: 0 0.25em 0.25em 0;
+}
+
+@media (min-width: 990px) {
+  .upload-form {
+    margin-inline: 15em;
+  }
+}
+
+@media (max-width: 991px) {
+  .upload-form {
+    margin-inline: 1em;
+  }
+}
+
+/* Caixa de alerta */
+.alert {
+  margin-top: 1rem;
+}

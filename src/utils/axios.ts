@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
   baseURL:
-    /* 'https://projeto-api-gateway.herokuapp.com/' ||  */"/api",
+    "/api",
 });
 
 export default axiosInstance;

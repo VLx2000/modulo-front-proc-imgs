@@ -1,6 +1,6 @@
 import { ListaPacientes } from 'components';
 import { useEffect, useState } from 'react';
-import { Button, Container, FormControl, Spinner } from 'react-bootstrap';
+import { Button, Col, Container, FormControl, Row, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Paciente } from 'types/pacientes';
 import { alertMsgSwitch } from 'utils/alertMsg';
@@ -38,10 +38,10 @@ function Pacientes() {
             setPacientes(allPacientes);
         }
         else {
-            setPacientes(allPacientes.filter(paciente => 
-                    paciente.id.toString().includes(filter) || 
-                    paciente.apelido.toString().includes(filter) 
-                )
+            setPacientes(allPacientes.filter(paciente =>
+                paciente.id.toString().includes(filter) ||
+                paciente.apelido.toString().includes(filter)
+            )
             );
         }
     }
@@ -49,22 +49,26 @@ function Pacientes() {
     return (
         <Container>
             <h3 className="titulo-pag">Lista de Pacientes</h3>
-            <header className="header">
-                <FormControl
-                    type="search"
-                    placeholder="filtrar por id ou apelido"
-                    className="me-2"
-                    aria-label="Search"
-                    onChange={handleFilter}
-                />
-                {/* Ir para formulario de criação de pacientes */}
-                <div className="div-botao-novo">
-                    <Link to={'/adicionar'}>
-                        <Button>Adicionar novo paciente</Button>
-                    </Link>
-                </div>
-            </header>
             {showError && error}
+            <header className="header mt-5 mb-5">
+                <Row>
+                    <Col sm={8}>
+                        <FormControl
+                            type="search"
+                            placeholder="filtrar por id ou apelido"
+                            className="me-2"
+                            aria-label="Search"
+                            onChange={handleFilter}
+                        />
+                    </Col>
+                    {/* Ir para formulario de criação de pacientes */}
+                    <Col sm={4} className="div-botao-add-novo">
+                        <Link to={'/adicionar'}>
+                            <Button>Adicionar novo paciente</Button>
+                        </Link>
+                    </Col>
+                </Row>
+            </header>
             {carregado ?
                 <ListaPacientes pacientes={pacientes} />
                 : <div className="d-flex justify-content-center">

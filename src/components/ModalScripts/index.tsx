@@ -5,7 +5,6 @@ import { alertMsgSwitch } from 'utils/alertMsg';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from 'utils/axios';
-import './styles.css';
 
 function ModalScripts() {
     const params = useParams();
@@ -94,8 +93,8 @@ function ModalScripts() {
     }
 
     return (
-        <header className="header">
-            <div className="div-botao-novo">
+        <header className="header mt-5 mb-5">
+            <div className="div-botao-add-novo">
                 <Button onClick={() => { setShow(true); }}>Novo processamento</Button>
             </div>
             <Modal show={show} onHide={() => setShow(false)} centered>

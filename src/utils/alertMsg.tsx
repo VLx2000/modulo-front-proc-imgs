@@ -8,7 +8,7 @@ export function alertMsgSwitch(code: number, msg: string, setShowError: React.Di
                     variant="warning"
                     onClose={() => setShowError(false)}
                     dismissible>
-                    Sessão expirada, faça <Alert.Link href='/login'>login</Alert.Link> novamente.
+                    Sessão expirada, faça <Alert.Link href='/#/login'>login</Alert.Link> novamente.
                 </Alert>
             );
         case 404:
@@ -17,7 +17,7 @@ export function alertMsgSwitch(code: number, msg: string, setShowError: React.Di
                     variant="danger"
                     onClose={() => setShowError(false)}
                     dismissible>
-                    {msg} <Alert.Link href=' '>Tentar novamente.</Alert.Link>
+                    {msg} <Alert.Link href='.'>Tente recarregar.</Alert.Link>
                 </Alert>
             );
         default:
@@ -26,7 +26,7 @@ export function alertMsgSwitch(code: number, msg: string, setShowError: React.Di
                     variant="danger"
                     onClose={() => setShowError(false)}
                     dismissible>
-                    Ops. Algo deu errado <Alert.Link href=' '>Tentar novamente.</Alert.Link>
+                    Ops. Algo deu errado <Alert.Link href='.'>Tente recarregar.</Alert.Link>
                 </Alert>
             );
     }

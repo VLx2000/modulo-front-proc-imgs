@@ -2,6 +2,7 @@ import { Navbar, Container, Button } from 'react-bootstrap';
 import { AuthContext } from 'contexts/auth';
 import { useContext } from 'react';
 import './styles.css';
+const logo = require('../../assets/logo.ico');
 
 function NavigationBar() {
 
@@ -15,9 +16,17 @@ function NavigationBar() {
 
     return (
         <Navbar collapseOnSelect bg="dark" variant='dark' expand="lg" sticky="top">
-            <Container >
+            <Container>
                 <Navbar.Brand href={home} title="Processamento de imagens">
-                    <h1>Biomedical Image Processing</h1>
+                    <img
+                        alt=""
+                        src={logo}
+                        width="30"
+                        height="30"
+                        style={{borderRadius: 6}}
+                        className="d-inline-block align-top"
+                        />{' '}
+                    Biomedical Image Processing
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">

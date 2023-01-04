@@ -3,7 +3,6 @@ import { Button, Table } from "react-bootstrap";
 import { Users } from "types/users";
 import { alertMsgSwitch } from "utils/alertMsg";
 import axiosInstance from "utils/axios";
-import './styles.css';
 
 type Props = {
     usuarios: Users[];
@@ -31,7 +30,7 @@ function ListaUsers({ usuarios }: Props) {
     return (
         <div className="lista">
             {showError && error}
-            <div className='divMsg'><p>{usuarios?.length ?? 0} usuário(s)</p></div>
+            <div className='tam-lista'><p>{usuarios?.length ?? 0} usuário(s)</p></div>
             <Table striped bordered responsive>
                 <thead>
                     <tr>
