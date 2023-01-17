@@ -1,9 +1,10 @@
-import fileDownload from "js-file-download";
 import { useState } from "react";
 import { Badge, Button, Spinner, Table } from "react-bootstrap";
 import { Processamento } from "types/processamentos";
 import { alertMsgSwitch } from "utils/alertMsg";
 import axiosInstance from "utils/axios";
+import JSZip from "jszip";
+import { saveAs } from 'file-saver';
 
 type Props = {
     processamentos: Processamento[];
@@ -17,12 +18,37 @@ function ListaProcs({ processamentos }: Props) {
     const [error, setError] = useState<any | null>(null);
     const [showError, setShowError] = useState(false);
 
+    const [zipName, setZipName] = useState<String>('');
+
     function getResults(idProc: number) {
+        var zip = new JSZip();
+        const promises = [];
         setLoading(true);
         axiosInstance
             .get('/resultados/' + idProc)
             .then((res) => {
-                res.data.map((result: { id: number; }) => downloadResult(result.id))
+                res.data.map((result: { id: number; }) =>
+                    promises.push(
+                        axiosInstance
+                            .get('/resultados/download/' + result.id, {
+                                responseType: 'blob',
+                            })
+                            .then((res) => {
+                                zip.file(res.headers['content-disposition'].split('filename=')[1], res.data)
+                                if (res.headers['content-disposition'].split('filename=')[1].match('.nii')){
+                                    setZipName(res.headers['content-disposition'].split('filename=')[1].split('.')[0] + '.zip')
+                                }
+                            })
+                            .catch((err) => console.log("Erro ao baixar resultado #" + result.id))
+                    )
+                )
+                Promise.all(promises).then(() => {
+                    console.log(zipName)
+                    zip.generateAsync({ type: "blob" })
+                        .then((content) => {
+                            saveAs(content, zipName);
+                        })
+                })
             })
             .catch((error) => {
                 const code = error?.response?.status;
@@ -30,16 +56,6 @@ function ListaProcs({ processamentos }: Props) {
                 setShowError(true);
             })
             .finally(() => setLoading(false));
-    }
-
-    function downloadResult(idResult: number) {
-        axiosInstance
-            .get('/resultados/download/' + idResult)
-            .then((res) => {
-                //console.log(res.headers)
-                fileDownload(res.data, res.headers['content-disposition'].split('filename=')[1]);
-            })
-            .catch((err) => console.log("Erro ao baixar resultado #" + idResult));
     }
 
     function setColor(status: string) {
@@ -84,14 +100,14 @@ function ListaProcs({ processamentos }: Props) {
         }
         else {
             return <span>
-                        <Spinner
-                        as="span"
-                        animation="border"
-                        size="sm"
-                        role="status"
-                        aria-hidden="true"
-                        /> {status}...
-                    </span>
+                <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                /> {status}...
+            </span>
         }
     }
 
