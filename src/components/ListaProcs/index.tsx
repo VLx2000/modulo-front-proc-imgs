@@ -18,34 +18,33 @@ function ListaProcs({ processamentos }: Props) {
     const [error, setError] = useState<any | null>(null);
     const [showError, setShowError] = useState(false);
 
-    const [zipName, setZipName] = useState<String>('');
-
-    function getResults(idProc: number) {
+    function getResults(idProc: number, zipName: string) {
         var zip = new JSZip();
-        setZipName('download.zip');
+        const promises = [];
         setLoading(true);
         axiosInstance
             .get('/resultados/' + idProc)
             .then((res) => {
                 res.data.map((result: { id: number; }) =>
-                    axiosInstance
-                        .get('/resultados/download/' + result.id, {
-                            responseType: 'blob',
-                        })
-                        .then((res) => {
-                            zip.file(res.headers['content-disposition'].split('filename=')[1], res.data)
-                            setZipName(res.headers['content-disposition'].split('filename=')[1].split('.')[0] + '.zip')
-                        })
-                        .catch((err) => console.log("Erro ao baixar resultado #" + result.id))
+                    promises.push(
+                        axiosInstance
+                            .get('/resultados/download/' + result.id, {
+                                responseType: 'blob',
+                            })
+                            .then((res) => {
+                                zip.file(res.headers['content-disposition'].split('filename=')[1], res.data)
+                            })
+                            .catch((err) => console.log("Erro ao baixar resultado #" + result.id))
+                    )
                 )
+                Promise.all(promises).then(() => {
+                    console.log(zipName)
+                    zip.generateAsync({ type: "blob" })
+                        .then((content) => {
+                            saveAs(content, zipName + '_' + idProc);
+                        })
+                })
             })
-            .then(() =>
-                zip.generateAsync({ type: "blob" })
-                    .then((content) => {
-                        //console.log(content)
-                        saveAs(content, zipName)
-                    })
-            )
             .catch((error) => {
                 const code = error?.response?.status;
                 setError(alertMsgSwitch(code, 'Erro ao baixar resultados', setError));
@@ -145,7 +144,7 @@ function ListaProcs({ processamentos }: Props) {
                                 <Button
                                     disabled={!proc.status.match('PROCESSADO')}
                                     variant="success"
-                                    onClick={() => getResults(proc.id)}>
+                                    onClick={() => getResults(proc.id, proc.nomeServico)}>
                                     Baixar
                                 </Button>
                             </td>
