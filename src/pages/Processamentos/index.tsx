@@ -21,7 +21,7 @@ function Processamentos() {
         getProcs(params.idImage);
         let interval = setInterval(() => {
             getProcs(params.idImage);
-        }, 2000);
+        }, 10000);
         return () => clearInterval(interval);
     }, [params.idImage]);
 
