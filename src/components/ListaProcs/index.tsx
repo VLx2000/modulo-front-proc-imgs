@@ -18,7 +18,7 @@ function ListaProcs({ processamentos }: Props) {
     const [error, setError] = useState<any | null>(null);
     const [showError, setShowError] = useState(false);
 
-    function getResults(idProc: number, zipName: string) {
+    /* function getResults(idProc: number, zipName: string) {
         var zip = new JSZip();
         const promises = [];
         setLoading(true);
@@ -44,6 +44,24 @@ function ListaProcs({ processamentos }: Props) {
                             saveAs(content, zipName + '_' + idProc);
                         })
                 })
+            })
+            .catch((error) => {
+                const code = error?.response?.status;
+                setError(alertMsgSwitch(code, 'Erro ao baixar resultados', setError));
+                setShowError(true);
+            })
+            .finally(() => setLoading(false));
+    } */
+
+    function getResults(idProc: number, zipName: string) {
+
+        setLoading(true);
+        axiosInstance
+            .get('/resultados/download/' + idProc, {
+                responseType: 'blob',
+            })
+            .then((res) => {
+                saveAs(res.data, res.headers['content-disposition'].split('filename=')[1]);
             })
             .catch((error) => {
                 const code = error?.response?.status;

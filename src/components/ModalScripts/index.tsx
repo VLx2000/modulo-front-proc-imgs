@@ -15,7 +15,7 @@ function ModalScripts() {
     const [scripts, setScripts] = useState<any>();
     const [scriptEscolhidoData, setScriptEscolhidoData] = useState<any>();
     const [scriptEscolhido, setScriptEscolhido] = useState<string>('');
-    const [nomeSaida, setNomeSaida] = useState<string>('resultado_processado');
+    const [nomeSaida, setNomeSaida] = useState<string>('resultado');
 
     const [error, setError] = useState<any | null>(null);
     const [showError, setShowError] = useState(false);
@@ -58,7 +58,7 @@ function ModalScripts() {
         })
         formData.append('inputs', JSON.stringify(script));
         formData.append('idImage', params?.idImage!);
-        setNomeSaida('resultado_processado');
+        setNomeSaida('resultado');
         toast.info(msgProcessando, {
             position: toast.POSITION.BOTTOM_CENTER,
             theme: 'colored'
@@ -124,7 +124,7 @@ function ModalScripts() {
                         item.type === 'string' ?
                             <Form.Group className="mb-3" key={item.flag}>
                                 <Form.Label>Dê um nome para a imagem processada:</Form.Label>
-                                <Form.Control type="text" onChange={handleNomeSaida} placeholder={'resultado_processado'} />
+                                <Form.Control type="text" onChange={handleNomeSaida} placeholder={'resultado'} />
                             </Form.Group> :
                         item.type === 'static file array' ?
                             <Form.Group className="mb-3" key={item.flag} hidden>
